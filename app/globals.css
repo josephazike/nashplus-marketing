@@ -41,3 +41,10 @@ body::after {
 .fade-up {
   animation: fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+.hover-dim {
+  transition: opacity 200ms;
+}
+.hover-dim:hover {
+  opacity: 0.75;
+}
