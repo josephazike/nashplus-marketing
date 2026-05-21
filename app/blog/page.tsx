@@ -4,22 +4,22 @@ import { getAllPostMeta, CATEGORY_LABELS, formatDate } from '@/lib/blog'
 import type { Category } from '@/lib/blog'
 
 export const metadata: Metadata = {
-  title:       'Resources — NashPlus',
+  title:       'Resources — Nash+',
   description: 'Plain-language guides to Ontario family law: Form 13, equalization, financial disclosure, and navigating family court as a self-represented litigant.',
   openGraph: {
-    title:       'Resources — NashPlus',
+    title:       'Resources — Nash+',
     description: 'Plain-language guides to Ontario family law.',
     url:         'https://nashplus.dev/blog',
-    siteName:    'NashPlus',
+    siteName:    'Nash+',
     type:        'website',
   },
 }
 
 const CATEGORY_COLORS: Record<Category, string> = {
-  'law-explained': 'var(--amber)',
-  'how-it-works':  '#8fbc8f',
-  'step-by-step':  '#7eb8d4',
-  'glossary':      '#b89bd4',
+  'law-explained': 'var(--gold)',
+  'how-it-works':  '#3a7c52',
+  'step-by-step':  '#3a6b7c',
+  'glossary':      '#6b5a8a',
 }
 
 export default function BlogIndex() {
@@ -33,21 +33,21 @@ export default function BlogIndex() {
       {/* ── Header ───────────────────────────────────────── */}
       <header style={{ padding: 'clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem) 0' }}>
         <p style={{
-          fontFamily:    'var(--font-dm-mono)',
+          fontFamily:    'var(--font-geist-mono)',
           fontSize:      '0.6rem',
           letterSpacing: '0.35em',
           textTransform: 'uppercase',
-          color:         'var(--amber)',
+          color:         'var(--gold)',
           margin:        '0 0 1.25rem',
         }}>
-          NashPlus / Resources
+          Nash+ / Resources
         </p>
         <h1 style={{
-          fontFamily:    'var(--font-cormorant)',
+          fontFamily:    'var(--font-playfair)',
           fontSize:      'clamp(3rem, 7vw, 6rem)',
           fontWeight:    600,
           letterSpacing: '-0.01em',
-          color:         'var(--cream)',
+          color:         'var(--forest)',
           lineHeight:    1.0,
           margin:        0,
         }}>
@@ -56,11 +56,11 @@ export default function BlogIndex() {
         <div style={{
           width:           '48px',
           height:          '1px',
-          backgroundColor: 'var(--amber)',
+          backgroundColor: 'var(--gold)',
           margin:          '2rem 0',
         }} />
         <p style={{
-          fontFamily: 'var(--font-cormorant)',
+          fontFamily: 'var(--font-playfair)',
           fontSize:   'clamp(1.05rem, 2vw, 1.2rem)',
           fontStyle:  'italic',
           fontWeight: 300,
@@ -79,7 +79,7 @@ export default function BlogIndex() {
         <section style={{ padding: 'clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 6vw, 5rem)' }}>
           <Link href={`/blog/${featured.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
             <article className="hover-dim" style={{
-              borderTop:  '1px solid rgba(242,237,230,0.1)',
+              borderTop:  '1px solid rgba(19,52,42,0.1)',
               paddingTop: '2.5rem',
               display:    'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
@@ -88,7 +88,7 @@ export default function BlogIndex() {
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem' }}>
                   <span style={{
-                    fontFamily:    'var(--font-dm-mono)',
+                    fontFamily:    'var(--font-geist-mono)',
                     fontSize:      '0.55rem',
                     letterSpacing: '0.3em',
                     textTransform: 'uppercase',
@@ -97,7 +97,7 @@ export default function BlogIndex() {
                     {CATEGORY_LABELS[featured.category]}
                   </span>
                   <span style={{
-                    fontFamily:    'var(--font-dm-mono)',
+                    fontFamily:    'var(--font-geist-mono)',
                     fontSize:      '0.55rem',
                     letterSpacing: '0.2em',
                     textTransform: 'uppercase',
@@ -107,10 +107,10 @@ export default function BlogIndex() {
                   </span>
                 </div>
                 <h2 style={{
-                  fontFamily:    'var(--font-cormorant)',
+                  fontFamily:    'var(--font-playfair)',
                   fontSize:      'clamp(2rem, 4vw, 3.25rem)',
                   fontWeight:    600,
-                  color:         'var(--cream)',
+                  color:         'var(--forest)',
                   lineHeight:    1.1,
                   margin:        0,
                   letterSpacing: '-0.01em',
@@ -120,7 +120,7 @@ export default function BlogIndex() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '1rem' }}>
                 <p style={{
-                  fontFamily: 'var(--font-cormorant)',
+                  fontFamily: 'var(--font-playfair)',
                   fontSize:   '1.05rem',
                   fontWeight: 300,
                   color:      'var(--muted)',
@@ -131,7 +131,7 @@ export default function BlogIndex() {
                 </p>
                 <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                   <span style={{
-                    fontFamily:    'var(--font-dm-mono)',
+                    fontFamily:    'var(--font-geist-mono)',
                     fontSize:      '0.55rem',
                     letterSpacing: '0.2em',
                     color:         'var(--muted)',
@@ -139,7 +139,7 @@ export default function BlogIndex() {
                     {formatDate(featured.date)}
                   </span>
                   <span style={{
-                    fontFamily:    'var(--font-dm-mono)',
+                    fontFamily:    'var(--font-geist-mono)',
                     fontSize:      '0.55rem',
                     letterSpacing: '0.2em',
                     color:         'var(--muted)',
@@ -147,10 +147,10 @@ export default function BlogIndex() {
                     {featured.readingTime} min read
                   </span>
                   <span style={{
-                    fontFamily:    'var(--font-dm-mono)',
+                    fontFamily:    'var(--font-geist-mono)',
                     fontSize:      '0.55rem',
                     letterSpacing: '0.2em',
-                    color:         'var(--amber)',
+                    color:         'var(--gold)',
                   }}>
                     Read →
                   </span>
@@ -168,7 +168,7 @@ export default function BlogIndex() {
             display:             'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
             gap:                 '0',
-            borderTop:           '1px solid rgba(242,237,230,0.1)',
+            borderTop:           '1px solid rgba(19,52,42,0.1)',
           }}>
             {rest.map((post, i) => (
               <Link
@@ -179,11 +179,11 @@ export default function BlogIndex() {
                 <article className="hover-dim" style={{
                   padding:      '2rem 0',
                   paddingRight: i % 3 !== 2 ? '3rem' : 0,
-                  borderBottom: '1px solid rgba(242,237,230,0.07)',
+                  borderBottom: '1px solid rgba(19,52,42,0.08)',
                   cursor:       'pointer',
                 }}>
                   <span style={{
-                    fontFamily:    'var(--font-dm-mono)',
+                    fontFamily:    'var(--font-geist-mono)',
                     fontSize:      '0.55rem',
                     letterSpacing: '0.3em',
                     textTransform: 'uppercase',
@@ -194,10 +194,10 @@ export default function BlogIndex() {
                     {CATEGORY_LABELS[post.category]}
                   </span>
                   <h3 style={{
-                    fontFamily:    'var(--font-cormorant)',
+                    fontFamily:    'var(--font-playfair)',
                     fontSize:      'clamp(1.35rem, 2.5vw, 1.7rem)',
                     fontWeight:    600,
-                    color:         'var(--cream)',
+                    color:         'var(--forest)',
                     lineHeight:    1.2,
                     margin:        '0 0 0.75rem',
                     letterSpacing: '-0.01em',
@@ -205,7 +205,7 @@ export default function BlogIndex() {
                     {post.title}
                   </h3>
                   <p style={{
-                    fontFamily: 'var(--font-cormorant)',
+                    fontFamily: 'var(--font-playfair)',
                     fontSize:   '0.95rem',
                     fontWeight: 300,
                     fontStyle:  'italic',
@@ -221,7 +221,7 @@ export default function BlogIndex() {
                   </p>
                   <div style={{ display: 'flex', gap: '1rem' }}>
                     <span style={{
-                      fontFamily:    'var(--font-dm-mono)',
+                      fontFamily:    'var(--font-geist-mono)',
                       fontSize:      '0.5rem',
                       letterSpacing: '0.2em',
                       color:         'var(--muted)',
@@ -229,7 +229,7 @@ export default function BlogIndex() {
                       {post.readingTime} min
                     </span>
                     <span style={{
-                      fontFamily:    'var(--font-dm-mono)',
+                      fontFamily:    'var(--font-geist-mono)',
                       fontSize:      '0.5rem',
                       letterSpacing: '0.2em',
                       color:         'var(--muted)',
@@ -248,10 +248,10 @@ export default function BlogIndex() {
       <footer style={{
         margin:    'clamp(3rem, 6vw, 5rem) clamp(1.5rem, 6vw, 5rem) 0',
         paddingTop: '2rem',
-        borderTop:  '1px solid rgba(242,237,230,0.08)',
+        borderTop:  '1px solid rgba(19,52,42,0.08)',
       }}>
         <p style={{
-          fontFamily:    'var(--font-dm-mono)',
+          fontFamily:    'var(--font-geist-mono)',
           fontSize:      '0.5rem',
           letterSpacing: '0.15em',
           color:         'var(--muted)',

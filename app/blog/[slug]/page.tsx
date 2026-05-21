@@ -8,10 +8,10 @@ import { getPost, getAllSlugs, formatDate, CATEGORY_LABELS } from '@/lib/blog'
 import type { Category } from '@/lib/blog'
 
 const CATEGORY_COLORS: Record<Category, string> = {
-  'law-explained': 'var(--amber)',
-  'how-it-works':  '#8fbc8f',
-  'step-by-step':  '#7eb8d4',
-  'glossary':      '#b89bd4',
+  'law-explained': 'var(--gold)',
+  'how-it-works':  '#3a7c52',
+  'step-by-step':  '#3a6b7c',
+  'glossary':      '#6b5a8a',
 }
 
 export async function generateStaticParams() {
@@ -25,13 +25,13 @@ export async function generateMetadata(
   const post = getPost(slug)
   if (!post) return {}
   return {
-    title:       `${post.title} — NashPlus`,
+    title:       `${post.title} — Nash+`,
     description: post.description,
     openGraph: {
       title:       post.title,
       description: post.description,
       url:         `https://nashplus.dev/blog/${post.slug}`,
-      siteName:    'NashPlus',
+      siteName:    'Nash+',
       type:        'article',
       publishedTime: post.date,
     },
@@ -41,23 +41,23 @@ export async function generateMetadata(
 const mdxComponents = {
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2 style={{
-      fontFamily:    'var(--font-cormorant)',
+      fontFamily:    'var(--font-playfair)',
       fontSize:      'clamp(1.5rem, 3vw, 2rem)',
       fontWeight:    600,
-      color:         'var(--cream)',
+      color:         'var(--forest)',
       letterSpacing: '-0.01em',
       lineHeight:    1.2,
       margin:        '3rem 0 1rem',
       paddingTop:    '0.25rem',
-      borderTop:     '1px solid rgba(242,237,230,0.1)',
+      borderTop:     '1px solid rgba(19,52,42,0.1)',
     }} {...props} />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3 style={{
-      fontFamily:    'var(--font-cormorant)',
+      fontFamily:    'var(--font-playfair)',
       fontSize:      'clamp(1.2rem, 2.5vw, 1.5rem)',
       fontWeight:    600,
-      color:         'var(--cream)',
+      color:         'var(--forest)',
       letterSpacing: '-0.005em',
       lineHeight:    1.3,
       margin:        '2.25rem 0 0.75rem',
@@ -65,20 +65,20 @@ const mdxComponents = {
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p style={{
-      fontFamily: 'var(--font-cormorant)',
+      fontFamily: 'var(--font-playfair)',
       fontSize:   'clamp(1rem, 1.8vw, 1.125rem)',
       fontWeight: 300,
-      color:      'var(--cream)',
+      color:      'var(--forest)',
       lineHeight: 1.8,
       margin:     '0 0 1.4rem',
     }} {...props} />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
     <ul style={{
-      fontFamily:  'var(--font-cormorant)',
+      fontFamily:  'var(--font-playfair)',
       fontSize:    'clamp(1rem, 1.8vw, 1.125rem)',
       fontWeight:  300,
-      color:       'var(--cream)',
+      color:       'var(--forest)',
       lineHeight:  1.8,
       margin:      '0 0 1.4rem',
       paddingLeft: '1.5rem',
@@ -86,10 +86,10 @@ const mdxComponents = {
   ),
   ol: (props: React.HTMLAttributes<HTMLOListElement>) => (
     <ol style={{
-      fontFamily:  'var(--font-cormorant)',
+      fontFamily:  'var(--font-playfair)',
       fontSize:    'clamp(1rem, 1.8vw, 1.125rem)',
       fontWeight:  300,
-      color:       'var(--cream)',
+      color:       'var(--forest)',
       lineHeight:  1.8,
       margin:      '0 0 1.4rem',
       paddingLeft: '1.5rem',
@@ -100,7 +100,7 @@ const mdxComponents = {
   ),
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote style={{
-      borderLeft:  '2px solid var(--amber)',
+      borderLeft:  '2px solid var(--gold)',
       paddingLeft: '1.5rem',
       margin:      '2rem 0',
       fontStyle:   'italic',
@@ -110,22 +110,22 @@ const mdxComponents = {
   hr: () => (
     <hr style={{
       border:    'none',
-      borderTop: '1px solid rgba(242,237,230,0.1)',
+      borderTop: '1px solid rgba(19,52,42,0.1)',
       margin:    '2.5rem 0',
     }} />
   ),
   strong: (props: React.HTMLAttributes<HTMLElement>) => (
-    <strong style={{ fontWeight: 600, color: 'var(--cream)' }} {...props} />
+    <strong style={{ fontWeight: 600, color: 'var(--forest)' }} {...props} />
   ),
   em: (props: React.HTMLAttributes<HTMLElement>) => (
     <em style={{ fontStyle: 'italic', color: 'var(--muted)' }} {...props} />
   ),
   code: (props: React.HTMLAttributes<HTMLElement>) => (
     <code style={{
-      fontFamily:      'var(--font-dm-mono)',
+      fontFamily:      'var(--font-geist-mono)',
       fontSize:        '0.85em',
-      backgroundColor: 'rgba(201,169,110,0.1)',
-      color:           'var(--amber)',
+      backgroundColor: 'rgba(19,52,42,0.06)',
+      color:           'var(--gold)',
       padding:         '0.1em 0.35em',
       borderRadius:    '2px',
     }} {...props} />
@@ -145,7 +145,7 @@ export default async function BlogPost(
       {/* ── Back link ──────────────────────────────────────── */}
       <div style={{ padding: 'clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 6vw, 5rem) 0' }}>
         <Link href="/blog" style={{
-          fontFamily:    'var(--font-dm-mono)',
+          fontFamily:    'var(--font-geist-mono)',
           fontSize:      '0.55rem',
           letterSpacing: '0.3em',
           textTransform: 'uppercase',
@@ -161,7 +161,7 @@ export default async function BlogPost(
         <div style={{ maxWidth: '740px' }}>
           <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', marginBottom: '1.5rem' }}>
             <span style={{
-              fontFamily:    'var(--font-dm-mono)',
+              fontFamily:    'var(--font-geist-mono)',
               fontSize:      '0.55rem',
               letterSpacing: '0.3em',
               textTransform: 'uppercase',
@@ -170,7 +170,7 @@ export default async function BlogPost(
               {CATEGORY_LABELS[post.category]}
             </span>
             <span style={{
-              fontFamily:    'var(--font-dm-mono)',
+              fontFamily:    'var(--font-geist-mono)',
               fontSize:      '0.55rem',
               letterSpacing: '0.2em',
               color:         'var(--muted)',
@@ -178,7 +178,7 @@ export default async function BlogPost(
               {formatDate(post.date)}
             </span>
             <span style={{
-              fontFamily:    'var(--font-dm-mono)',
+              fontFamily:    'var(--font-geist-mono)',
               fontSize:      '0.55rem',
               letterSpacing: '0.2em',
               color:         'var(--muted)',
@@ -187,10 +187,10 @@ export default async function BlogPost(
             </span>
           </div>
           <h1 style={{
-            fontFamily:    'var(--font-cormorant)',
+            fontFamily:    'var(--font-playfair)',
             fontSize:      'clamp(2.25rem, 5vw, 4rem)',
             fontWeight:    600,
-            color:         'var(--cream)',
+            color:         'var(--forest)',
             lineHeight:    1.05,
             letterSpacing: '-0.02em',
             margin:        '0 0 1.5rem',
@@ -198,7 +198,7 @@ export default async function BlogPost(
             {post.title}
           </h1>
           <p style={{
-            fontFamily: 'var(--font-cormorant)',
+            fontFamily: 'var(--font-playfair)',
             fontSize:   'clamp(1.05rem, 2vw, 1.25rem)',
             fontWeight: 300,
             fontStyle:  'italic',
@@ -211,7 +211,7 @@ export default async function BlogPost(
           <div style={{
             width:           '48px',
             height:          '1px',
-            backgroundColor: 'var(--amber)',
+            backgroundColor: 'var(--gold)',
             margin:          '2rem 0 0',
           }} />
         </div>
@@ -244,7 +244,7 @@ export default async function BlogPost(
         maxWidth:   '740px',
       }}>
         <p style={{
-          fontFamily:    'var(--font-dm-mono)',
+          fontFamily:    'var(--font-geist-mono)',
           fontSize:      '0.5rem',
           letterSpacing: '0.15em',
           color:         'var(--muted)',
