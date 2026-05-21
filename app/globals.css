@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --bg:      #faf8f3;
-  --forest:  #13342A;
+  /* Verified byte-for-byte from ontario-srl-form13/apps/web/src/app/globals.css → --color-sage-950 */
+  --bg:      #1a3528;
+  --cream:   #faf8f3;
   --gold:    #c9a227;
-  --muted:   rgba(19, 52, 42, 0.48);
-  --surface: #f0ece0;
-  --border:  rgba(19, 52, 42, 0.1);
+  --muted:   rgba(250, 248, 243, 0.52);
+  --surface: rgba(250, 248, 243, 0.06);
+  --border:  rgba(250, 248, 243, 0.1);
 }
 
 body {
   background-color: var(--bg);
-  color: var(--forest);
+  color: var(--cream);
   min-height: 100vh;
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -23,10 +24,10 @@ body::after {
   position: fixed;
   inset: 0;
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n' x='0' y='0'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)' opacity='1'/></svg>");
-  opacity: 0.035;
+  opacity: 0.045;
   pointer-events: none;
   z-index: 999;
-  mix-blend-mode: multiply;
+  mix-blend-mode: screen;
 }
 
 @keyframes fade-up {

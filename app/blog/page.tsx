@@ -17,9 +17,9 @@ export const metadata: Metadata = {
 
 const CATEGORY_COLORS: Record<Category, string> = {
   'law-explained': 'var(--gold)',
-  'how-it-works':  '#3a7c52',
-  'step-by-step':  '#3a6b7c',
-  'glossary':      '#6b5a8a',
+  'how-it-works':  '#8fbc8f',
+  'step-by-step':  '#7eb8d4',
+  'glossary':      '#b89bd4',
 }
 
 export default function BlogIndex() {
@@ -47,7 +47,7 @@ export default function BlogIndex() {
           fontSize:      'clamp(3rem, 7vw, 6rem)',
           fontWeight:    600,
           letterSpacing: '-0.01em',
-          color:         'var(--forest)',
+          color:         'var(--cream)',
           lineHeight:    1.0,
           margin:        0,
         }}>
@@ -79,7 +79,7 @@ export default function BlogIndex() {
         <section style={{ padding: 'clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 6vw, 5rem)' }}>
           <Link href={`/blog/${featured.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
             <article className="hover-dim" style={{
-              borderTop:  '1px solid rgba(19,52,42,0.1)',
+              borderTop:  '1px solid rgba(250,248,243,0.1)',
               paddingTop: '2.5rem',
               display:    'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
@@ -110,7 +110,7 @@ export default function BlogIndex() {
                   fontFamily:    'var(--font-playfair)',
                   fontSize:      'clamp(2rem, 4vw, 3.25rem)',
                   fontWeight:    600,
-                  color:         'var(--forest)',
+                  color:         'var(--cream)',
                   lineHeight:    1.1,
                   margin:        0,
                   letterSpacing: '-0.01em',
@@ -168,7 +168,7 @@ export default function BlogIndex() {
             display:             'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
             gap:                 '0',
-            borderTop:           '1px solid rgba(19,52,42,0.1)',
+            borderTop:           '1px solid rgba(250,248,243,0.1)',
           }}>
             {rest.map((post, i) => (
               <Link
@@ -179,7 +179,7 @@ export default function BlogIndex() {
                 <article className="hover-dim" style={{
                   padding:      '2rem 0',
                   paddingRight: i % 3 !== 2 ? '3rem' : 0,
-                  borderBottom: '1px solid rgba(19,52,42,0.08)',
+                  borderBottom: '1px solid rgba(250,248,243,0.08)',
                   cursor:       'pointer',
                 }}>
                   <span style={{
@@ -197,7 +197,7 @@ export default function BlogIndex() {
                     fontFamily:    'var(--font-playfair)',
                     fontSize:      'clamp(1.35rem, 2.5vw, 1.7rem)',
                     fontWeight:    600,
-                    color:         'var(--forest)',
+                    color:         'var(--cream)',
                     lineHeight:    1.2,
                     margin:        '0 0 0.75rem',
                     letterSpacing: '-0.01em',
@@ -248,7 +248,7 @@ export default function BlogIndex() {
       <footer style={{
         margin:    'clamp(3rem, 6vw, 5rem) clamp(1.5rem, 6vw, 5rem) 0',
         paddingTop: '2rem',
-        borderTop:  '1px solid rgba(19,52,42,0.08)',
+        borderTop:  '1px solid rgba(250,248,243,0.08)',
       }}>
         <p style={{
           fontFamily:    'var(--font-geist-mono)',

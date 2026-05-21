@@ -74,17 +74,17 @@ export default function RootLayout({
           alignItems:      'center',
           justifyContent:  'space-between',
           padding:         '1.25rem clamp(1.5rem, 6vw, 5rem)',
-          borderBottom:    '1px solid rgba(19,52,42,0.08)',
+          borderBottom:    '1px solid rgba(250,248,243,0.08)',
           backdropFilter:  'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
-          backgroundColor: 'rgba(250,248,243,0.88)',
+          backgroundColor: 'rgba(26,53,40,0.9)',
         }}>
           <a href="/" style={{
             fontFamily:    'var(--font-playfair)',
             fontSize:      '1.05rem',
             fontWeight:    700,
             letterSpacing: '0.01em',
-            color:         'var(--forest)',
+            color:         'var(--cream)',
             textDecoration: 'none',
           }}>
             Nash+

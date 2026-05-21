@@ -9,9 +9,9 @@ import type { Category } from '@/lib/blog'
 
 const CATEGORY_COLORS: Record<Category, string> = {
   'law-explained': 'var(--gold)',
-  'how-it-works':  '#3a7c52',
-  'step-by-step':  '#3a6b7c',
-  'glossary':      '#6b5a8a',
+  'how-it-works':  '#8fbc8f',
+  'step-by-step':  '#7eb8d4',
+  'glossary':      '#b89bd4',
 }
 
 export async function generateStaticParams() {
@@ -44,12 +44,12 @@ const mdxComponents = {
       fontFamily:    'var(--font-playfair)',
       fontSize:      'clamp(1.5rem, 3vw, 2rem)',
       fontWeight:    600,
-      color:         'var(--forest)',
+      color:         'var(--cream)',
       letterSpacing: '-0.01em',
       lineHeight:    1.2,
       margin:        '3rem 0 1rem',
       paddingTop:    '0.25rem',
-      borderTop:     '1px solid rgba(19,52,42,0.1)',
+      borderTop:     '1px solid rgba(250,248,243,0.12)',
     }} {...props} />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -57,7 +57,7 @@ const mdxComponents = {
       fontFamily:    'var(--font-playfair)',
       fontSize:      'clamp(1.2rem, 2.5vw, 1.5rem)',
       fontWeight:    600,
-      color:         'var(--forest)',
+      color:         'var(--cream)',
       letterSpacing: '-0.005em',
       lineHeight:    1.3,
       margin:        '2.25rem 0 0.75rem',
@@ -68,7 +68,7 @@ const mdxComponents = {
       fontFamily: 'var(--font-playfair)',
       fontSize:   'clamp(1rem, 1.8vw, 1.125rem)',
       fontWeight: 300,
-      color:      'var(--forest)',
+      color:      'var(--cream)',
       lineHeight: 1.8,
       margin:     '0 0 1.4rem',
     }} {...props} />
@@ -78,7 +78,7 @@ const mdxComponents = {
       fontFamily:  'var(--font-playfair)',
       fontSize:    'clamp(1rem, 1.8vw, 1.125rem)',
       fontWeight:  300,
-      color:       'var(--forest)',
+      color:       'var(--cream)',
       lineHeight:  1.8,
       margin:      '0 0 1.4rem',
       paddingLeft: '1.5rem',
@@ -89,7 +89,7 @@ const mdxComponents = {
       fontFamily:  'var(--font-playfair)',
       fontSize:    'clamp(1rem, 1.8vw, 1.125rem)',
       fontWeight:  300,
-      color:       'var(--forest)',
+      color:       'var(--cream)',
       lineHeight:  1.8,
       margin:      '0 0 1.4rem',
       paddingLeft: '1.5rem',
@@ -110,12 +110,12 @@ const mdxComponents = {
   hr: () => (
     <hr style={{
       border:    'none',
-      borderTop: '1px solid rgba(19,52,42,0.1)',
+      borderTop: '1px solid rgba(250,248,243,0.12)',
       margin:    '2.5rem 0',
     }} />
   ),
   strong: (props: React.HTMLAttributes<HTMLElement>) => (
-    <strong style={{ fontWeight: 600, color: 'var(--forest)' }} {...props} />
+    <strong style={{ fontWeight: 600, color: 'var(--cream)' }} {...props} />
   ),
   em: (props: React.HTMLAttributes<HTMLElement>) => (
     <em style={{ fontStyle: 'italic', color: 'var(--muted)' }} {...props} />
@@ -124,7 +124,7 @@ const mdxComponents = {
     <code style={{
       fontFamily:      'var(--font-geist-mono)',
       fontSize:        '0.85em',
-      backgroundColor: 'rgba(19,52,42,0.06)',
+      backgroundColor: 'rgba(250,248,243,0.1)',
       color:           'var(--gold)',
       padding:         '0.1em 0.35em',
       borderRadius:    '2px',
@@ -190,7 +190,7 @@ export default async function BlogPost(
             fontFamily:    'var(--font-playfair)',
             fontSize:      'clamp(2.25rem, 5vw, 4rem)',
             fontWeight:    600,
-            color:         'var(--forest)',
+            color:         'var(--cream)',
             lineHeight:    1.05,
             letterSpacing: '-0.02em',
             margin:        '0 0 1.5rem',

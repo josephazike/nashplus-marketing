@@ -17,7 +17,7 @@ export default function Home() {
             fontSize:      'clamp(3.5rem, 10vw, 8rem)',
             fontWeight:    700,
             letterSpacing: '0.04em',
-            color:         'var(--forest)',
+            color:         'var(--cream)',
             lineHeight:    1,
             margin:        0,
             animationDelay: '0ms',
