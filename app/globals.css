@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  /* Verified byte-for-byte from ontario-srl-form13/apps/web/src/app/globals.css → --color-sage-950 */
-  --bg:      #1a3528;
+  /* Byte-identical to ontario-srl-form13/apps/web/src/app/globals.css → --color-sage-900 (product homepage hero bg) */
+  --bg:      #2d5a3d;
   --cream:   #faf8f3;
   --gold:    #c9a227;
   --muted:   rgba(250, 248, 243, 0.52);
