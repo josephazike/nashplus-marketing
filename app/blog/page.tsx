@@ -5,29 +5,29 @@ import type { Category, Cluster } from '@/lib/blog'
 import { LegalDisclaimer } from '@/components/LegalDisclaimer'
 
 export const metadata: Metadata = {
-  title:       'Resources — Nash+',
+  title:       'Resources — NashPlus',
   description: 'Plain-language guides to Ontario family law: Form 13, equalization, financial disclosure, and navigating family court as a self-represented litigant.',
   openGraph: {
-    title:       'Resources — Nash+',
+    title:       'Resources — NashPlus',
     description: 'Plain-language guides to Ontario family law.',
     url:         'https://nashplus.dev/blog',
-    siteName:    'Nash+',
+    siteName:    'NashPlus',
     type:        'website',
   },
 }
 
 const CATEGORY_COLORS: Record<Category, string> = {
-  'law-explained': 'var(--gold)',
-  'how-it-works':  '#8fbc8f',
-  'step-by-step':  '#7eb8d4',
-  'glossary':      '#b89bd4',
+  'law-explained': 'var(--green-600)',
+  'how-it-works':  '#4a7c5e',
+  'step-by-step':  '#3d6a8a',
+  'glossary':      '#7a5a8a',
 }
 
 const CLUSTER_COLORS: Record<Cluster, string> = {
-  'forms':               '#7eb8d4',
-  'concepts':            'var(--gold)',
-  'procedure-and-fears': '#8fbc8f',
-  'glossary':            '#b89bd4',
+  'forms':               '#3d6a8a',
+  'concepts':            'var(--green-600)',
+  'procedure-and-fears': '#4a7c5e',
+  'glossary':            '#7a5a8a',
 }
 
 export default function BlogIndex() {
@@ -35,7 +35,6 @@ export default function BlogIndex() {
   const featured = posts.find(p => p.featured)
   const rest     = posts.filter(p => !p.featured)
 
-  // Group non-featured posts by cluster; omit empty clusters from render
   const byCluster = groupByCluster(rest)
   const activeClusters = (['forms', 'concepts', 'procedure-and-fears', 'glossary'] as Cluster[])
     .filter(c => (byCluster.get(c) ?? []).length > 0)
@@ -43,24 +42,25 @@ export default function BlogIndex() {
   return (
     <div style={{ minHeight: '100vh', paddingBottom: '6rem' }}>
 
-      {/* ── Header ───────────────────────────────────────── */}
-      <header style={{ padding: 'clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem) 0' }}>
+      {/* ── Header ─────────────────────────────────────────────── */}
+      <header style={{ padding: 'clamp(4rem, 10vw, 8rem) var(--gutter) 0' }}>
         <p style={{
-          fontFamily:    'var(--font-geist-mono)',
+          fontFamily:    'var(--font-mono)',
           fontSize:      '0.6rem',
-          letterSpacing: '0.35em',
+          letterSpacing: '0.36em',
           textTransform: 'uppercase',
-          color:         'var(--gold)',
+          color:         'var(--green-600)',
           margin:        '0 0 1.25rem',
         }}>
-          Nash+ / Resources
+          NashPlus / Resources
         </p>
         <h1 style={{
-          fontFamily:    'var(--font-playfair)',
+          fontFamily:    'var(--font-display)',
           fontSize:      'clamp(3rem, 7vw, 6rem)',
           fontWeight:    600,
-          letterSpacing: '-0.01em',
-          color:         'var(--cream)',
+          fontStyle:     'italic',
+          letterSpacing: '-0.02em',
+          color:         'var(--ink)',
           lineHeight:    1.0,
           margin:        0,
         }}>
@@ -68,25 +68,25 @@ export default function BlogIndex() {
         </h1>
         <div style={{
           width:           '48px',
-          height:          '1px',
-          backgroundColor: 'var(--gold)',
+          height:          '3px',
+          backgroundColor: 'var(--green-600)',
           margin:          '2rem 0',
         }} />
         <p style={{
-          fontFamily: 'var(--font-playfair)',
+          fontFamily: 'var(--font-body)',
           fontSize:   'clamp(1.05rem, 2vw, 1.2rem)',
           fontStyle:  'italic',
-          fontWeight: 300,
-          color:      'var(--muted)',
+          fontWeight: 400,
+          color:      'var(--ink-muted)',
           maxWidth:   '520px',
-          lineHeight: 1.6,
+          lineHeight: 1.65,
           margin:     0,
         }}>
           Plain-language guides to Ontario family law — Form 13, equalization,
           financial disclosure, and what self-represented litigants need to know.
         </p>
 
-        {/* ── Cluster navigation ────────────────────────── */}
+        {/* Cluster navigation */}
         {activeClusters.length > 1 && (
           <nav
             aria-label="Content clusters"
@@ -102,7 +102,7 @@ export default function BlogIndex() {
                 key={cluster}
                 href={`#cluster-${cluster}`}
                 style={{
-                  fontFamily:     'var(--font-geist-mono)',
+                  fontFamily:     'var(--font-mono)',
                   fontSize:       '0.5rem',
                   letterSpacing:  '0.28em',
                   textTransform:  'uppercase',
@@ -111,6 +111,7 @@ export default function BlogIndex() {
                   border:         `1px solid ${CLUSTER_COLORS[cluster]}`,
                   padding:        '0.35rem 0.75rem',
                   opacity:        0.8,
+                  transition:     'opacity 200ms',
                 }}
               >
                 {CLUSTER_LABELS[cluster]}
@@ -120,12 +121,12 @@ export default function BlogIndex() {
         )}
       </header>
 
-      {/* ── Featured post ────────────────────────────────── */}
+      {/* ── Featured post ─────────────────────────────────────── */}
       {featured && (
-        <section style={{ padding: 'clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 6vw, 5rem)' }}>
+        <section style={{ padding: 'clamp(2.5rem, 6vw, 5rem) var(--gutter)' }}>
           <Link href={`/blog/${featured.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
             <article className="hover-dim" style={{
-              borderTop:  '1px solid rgba(250,248,243,0.1)',
+              borderTop:  '1px solid var(--border)',
               paddingTop: '2.5rem',
               display:    'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
@@ -134,7 +135,7 @@ export default function BlogIndex() {
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem' }}>
                   <span style={{
-                    fontFamily:    'var(--font-geist-mono)',
+                    fontFamily:    'var(--font-mono)',
                     fontSize:      '0.55rem',
                     letterSpacing: '0.3em',
                     textTransform: 'uppercase',
@@ -143,33 +144,35 @@ export default function BlogIndex() {
                     {CATEGORY_LABELS[featured.category]}
                   </span>
                   <span style={{
-                    fontFamily:    'var(--font-geist-mono)',
+                    fontFamily:    'var(--font-mono)',
                     fontSize:      '0.55rem',
                     letterSpacing: '0.2em',
                     textTransform: 'uppercase',
-                    color:         'var(--muted)',
+                    color:         'var(--ink-faint)',
                   }}>
                     Featured
                   </span>
                 </div>
                 <h2 style={{
-                  fontFamily:    'var(--font-playfair)',
+                  fontFamily:    'var(--font-display)',
                   fontSize:      'clamp(2rem, 4vw, 3.25rem)',
                   fontWeight:    600,
-                  color:         'var(--cream)',
+                  fontStyle:     'italic',
+                  color:         'var(--ink)',
                   lineHeight:    1.1,
                   margin:        0,
-                  letterSpacing: '-0.01em',
+                  letterSpacing: '-0.015em',
                 }}>
                   {featured.title}
                 </h2>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '1rem' }}>
                 <p style={{
-                  fontFamily: 'var(--font-playfair)',
+                  fontFamily: 'var(--font-body)',
                   fontSize:   '1.05rem',
-                  fontWeight: 300,
-                  color:      'var(--muted)',
+                  fontWeight: 400,
+                  fontStyle:  'italic',
+                  color:      'var(--ink-muted)',
                   lineHeight: 1.65,
                   margin:     0,
                 }}>
@@ -177,26 +180,26 @@ export default function BlogIndex() {
                 </p>
                 <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                   <span style={{
-                    fontFamily:    'var(--font-geist-mono)',
-                    fontSize:      '0.55rem',
+                    fontFamily:    'var(--font-mono)',
+                    fontSize:      '0.5rem',
                     letterSpacing: '0.2em',
-                    color:         'var(--muted)',
+                    color:         'var(--ink-faint)',
                   }}>
                     {formatDate(featured.date)}
                   </span>
                   <span style={{
-                    fontFamily:    'var(--font-geist-mono)',
-                    fontSize:      '0.55rem',
+                    fontFamily:    'var(--font-mono)',
+                    fontSize:      '0.5rem',
                     letterSpacing: '0.2em',
-                    color:         'var(--muted)',
+                    color:         'var(--ink-faint)',
                   }}>
                     {featured.readingTime} min read
                   </span>
                   <span style={{
-                    fontFamily:    'var(--font-geist-mono)',
-                    fontSize:      '0.55rem',
+                    fontFamily:    'var(--font-mono)',
+                    fontSize:      '0.5rem',
                     letterSpacing: '0.2em',
-                    color:         'var(--gold)',
+                    color:         'var(--green-600)',
                   }}>
                     Read →
                   </span>
@@ -207,26 +210,25 @@ export default function BlogIndex() {
         </section>
       )}
 
-      {/* ── Cluster sections ─────────────────────────────── */}
+      {/* ── Cluster sections ──────────────────────────────────── */}
       {activeClusters.map(cluster => {
         const clusterPosts = byCluster.get(cluster) ?? []
         return (
           <section
             key={cluster}
             id={`cluster-${cluster}`}
-            style={{ padding: '0 clamp(1.5rem, 6vw, 5rem)', marginBottom: '3rem' }}
+            style={{ padding: '0 var(--gutter)', marginBottom: '3rem' }}
           >
-            {/* Cluster heading */}
             <div style={{
-              display:       'flex',
-              alignItems:    'baseline',
-              gap:           '1rem',
-              borderTop:     '1px solid rgba(250,248,243,0.1)',
-              paddingTop:    '2rem',
-              marginBottom:  '0',
+              display:      'flex',
+              alignItems:   'baseline',
+              gap:          '1rem',
+              borderTop:    '1px solid var(--border-light)',
+              paddingTop:   '2rem',
+              marginBottom: '0',
             }}>
               <h2 style={{
-                fontFamily:    'var(--font-geist-mono)',
+                fontFamily:    'var(--font-mono)',
                 fontSize:      '0.55rem',
                 letterSpacing: '0.35em',
                 textTransform: 'uppercase',
@@ -236,16 +238,15 @@ export default function BlogIndex() {
                 {CLUSTER_LABELS[cluster]}
               </h2>
               <span style={{
-                fontFamily:    'var(--font-geist-mono)',
+                fontFamily:    'var(--font-mono)',
                 fontSize:      '0.45rem',
                 letterSpacing: '0.2em',
-                color:         'var(--muted)',
+                color:         'var(--ink-faint)',
               }}>
                 {clusterPosts.length} {clusterPosts.length === 1 ? 'article' : 'articles'}
               </span>
             </div>
 
-            {/* Posts grid within cluster */}
             <div style={{
               display:             'grid',
               gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
@@ -260,11 +261,11 @@ export default function BlogIndex() {
                   <article className="hover-dim" style={{
                     padding:      '2rem 0',
                     paddingRight: i % 3 !== 2 ? '3rem' : 0,
-                    borderBottom: '1px solid rgba(250,248,243,0.08)',
+                    borderBottom: '1px solid var(--border-light)',
                     cursor:       'pointer',
                   }}>
                     <span style={{
-                      fontFamily:    'var(--font-geist-mono)',
+                      fontFamily:    'var(--font-mono)',
                       fontSize:      '0.55rem',
                       letterSpacing: '0.3em',
                       textTransform: 'uppercase',
@@ -275,10 +276,11 @@ export default function BlogIndex() {
                       {CATEGORY_LABELS[post.category]}
                     </span>
                     <h3 style={{
-                      fontFamily:    'var(--font-playfair)',
-                      fontSize:      'clamp(1.35rem, 2.5vw, 1.7rem)',
+                      fontFamily:    'var(--font-display)',
+                      fontSize:      'clamp(1.35rem, 2.5vw, 1.75rem)',
                       fontWeight:    600,
-                      color:         'var(--cream)',
+                      fontStyle:     'italic',
+                      color:         'var(--ink)',
                       lineHeight:    1.2,
                       margin:        '0 0 0.75rem',
                       letterSpacing: '-0.01em',
@@ -286,34 +288,33 @@ export default function BlogIndex() {
                       {post.title}
                     </h3>
                     <p style={{
-                      fontFamily: 'var(--font-playfair)',
-                      fontSize:   '0.95rem',
-                      fontWeight: 300,
-                      fontStyle:  'italic',
-                      color:      'var(--muted)',
-                      lineHeight: 1.6,
-                      margin:     '0 0 1.25rem',
-                      display:    '-webkit-box',
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: 'vertical',
-                      overflow:   'hidden',
+                      fontFamily:       'var(--font-body)',
+                      fontSize:         '0.9375rem',
+                      fontStyle:        'italic',
+                      color:            'var(--ink-muted)',
+                      lineHeight:       1.65,
+                      margin:           '0 0 1.25rem',
+                      display:          '-webkit-box',
+                      WebkitLineClamp:  3,
+                      WebkitBoxOrient:  'vertical',
+                      overflow:         'hidden',
                     } as React.CSSProperties}>
                       {post.description}
                     </p>
                     <div style={{ display: 'flex', gap: '1rem' }}>
                       <span style={{
-                        fontFamily:    'var(--font-geist-mono)',
+                        fontFamily:    'var(--font-mono)',
                         fontSize:      '0.5rem',
                         letterSpacing: '0.2em',
-                        color:         'var(--muted)',
+                        color:         'var(--ink-faint)',
                       }}>
                         {post.readingTime} min
                       </span>
                       <span style={{
-                        fontFamily:    'var(--font-geist-mono)',
+                        fontFamily:    'var(--font-mono)',
                         fontSize:      '0.5rem',
                         letterSpacing: '0.2em',
-                        color:         'var(--muted)',
+                        color:         'var(--ink-faint)',
                       }}>
                         {formatDate(post.date)}
                       </span>
@@ -326,11 +327,11 @@ export default function BlogIndex() {
         )
       })}
 
-      {/* ── Disclaimer ───────────────────────────────────── */}
+      {/* ── Disclaimer ────────────────────────────────────────── */}
       <footer style={{
-        margin:    'clamp(3rem, 6vw, 5rem) clamp(1.5rem, 6vw, 5rem) 0',
+        margin:     'clamp(3rem, 6vw, 5rem) var(--gutter) 0',
         paddingTop: '2rem',
-        borderTop:  '1px solid rgba(250,248,243,0.08)',
+        borderTop:  '1px solid var(--border-light)',
       }}>
         <LegalDisclaimer />
       </footer>

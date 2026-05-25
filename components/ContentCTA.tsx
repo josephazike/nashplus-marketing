@@ -21,30 +21,31 @@ export function ContentCTA({
   return (
     <aside
       style={{
-        borderTop:    '1px solid rgba(250,248,243,0.12)',
-        borderBottom: '1px solid rgba(250,248,243,0.12)',
+        borderTop:    '1px solid var(--border)',
+        borderBottom: '1px solid var(--border)',
         padding:      'clamp(2rem, 4vw, 2.5rem) 0',
         margin:       'clamp(2.5rem, 5vw, 4rem) 0',
         ...style,
       }}
     >
       <p style={{
-        fontFamily:    'var(--font-geist-mono)',
+        fontFamily:    'var(--font-mono)',
         fontSize:      '0.55rem',
         letterSpacing: '0.3em',
         textTransform: 'uppercase',
-        color:         'var(--gold)',
+        color:         'var(--green-600)',
         margin:        '0 0 1rem',
       }}>
         Nash+ / Get Started
       </p>
 
       <h3 style={{
-        fontFamily:    'var(--font-playfair)',
-        fontSize:      'clamp(1.35rem, 2.5vw, 1.75rem)',
+        fontFamily:    'var(--font-display)',
+        fontSize:      'clamp(1.35rem, 2.5vw, 1.8rem)',
         fontWeight:    600,
-        color:         'var(--cream)',
-        letterSpacing: '-0.01em',
+        fontStyle:     'italic',
+        color:         'var(--ink)',
+        letterSpacing: '-0.015em',
         lineHeight:    1.2,
         margin:        '0 0 0.75rem',
       }}>
@@ -52,13 +53,12 @@ export function ContentCTA({
       </h3>
 
       <p style={{
-        fontFamily: 'var(--font-playfair)',
+        fontFamily: 'var(--font-body)',
         fontSize:   'clamp(0.95rem, 1.8vw, 1.05rem)',
-        fontWeight: 300,
         fontStyle:  'italic',
-        color:      'var(--muted)',
-        lineHeight: 1.65,
-        margin:     '0 0 1.5rem',
+        color:      'var(--ink-muted)',
+        lineHeight: 1.7,
+        margin:     '0 0 1.75rem',
         maxWidth:   '520px',
       }}>
         {body}
@@ -66,17 +66,7 @@ export function ContentCTA({
 
       <a
         href={PRODUCT_SIGNUP_URL}
-        style={{
-          display:         'inline-block',
-          fontFamily:      'var(--font-geist-mono)',
-          fontSize:        '0.55rem',
-          letterSpacing:   '0.3em',
-          textTransform:   'uppercase',
-          color:           'var(--bg)',
-          backgroundColor: 'var(--gold)',
-          padding:         '0.75rem 1.5rem',
-          textDecoration:  'none',
-        }}
+        className="btn-primary"
       >
         {cta} →
       </a>

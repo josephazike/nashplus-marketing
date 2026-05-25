@@ -6,12 +6,13 @@ import remarkGfm        from 'remark-gfm'
 import rehypeSlug       from 'rehype-slug'
 import { getPost, getAllSlugs, formatDate, CATEGORY_LABELS } from '@/lib/blog'
 import type { Category } from '@/lib/blog'
+import { ContentCTA }   from '@/components/ContentCTA'
 
 const CATEGORY_COLORS: Record<Category, string> = {
-  'law-explained': 'var(--gold)',
-  'how-it-works':  '#8fbc8f',
-  'step-by-step':  '#7eb8d4',
-  'glossary':      '#b89bd4',
+  'law-explained': 'var(--green-600)',
+  'how-it-works':  '#4a7c5e',
+  'step-by-step':  '#3d6a8a',
+  'glossary':      '#7a5a8a',
 }
 
 export async function generateStaticParams() {
@@ -25,13 +26,13 @@ export async function generateMetadata(
   const post = getPost(slug)
   if (!post) return {}
   return {
-    title:       `${post.title} — Nash+`,
+    title:       `${post.title} — NashPlus`,
     description: post.description,
     openGraph: {
       title:       post.title,
       description: post.description,
       url:         `https://nashplus.dev/blog/${post.slug}`,
-      siteName:    'Nash+',
+      siteName:    'NashPlus',
       type:        'article',
       publishedTime: post.date,
     },
@@ -41,91 +42,93 @@ export async function generateMetadata(
 const mdxComponents = {
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2 style={{
-      fontFamily:    'var(--font-playfair)',
-      fontSize:      'clamp(1.5rem, 3vw, 2rem)',
+      fontFamily:    'var(--font-display)',
+      fontSize:      'clamp(1.5rem, 3vw, 2.1rem)',
       fontWeight:    600,
-      color:         'var(--cream)',
-      letterSpacing: '-0.01em',
+      fontStyle:     'italic',
+      color:         'var(--ink)',
+      letterSpacing: '-0.015em',
       lineHeight:    1.2,
       margin:        '3rem 0 1rem',
       paddingTop:    '0.25rem',
-      borderTop:     '1px solid rgba(250,248,243,0.12)',
+      borderTop:     '1px solid var(--border)',
     }} {...props} />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3 style={{
-      fontFamily:    'var(--font-playfair)',
-      fontSize:      'clamp(1.2rem, 2.5vw, 1.5rem)',
+      fontFamily:    'var(--font-display)',
+      fontSize:      'clamp(1.2rem, 2.5vw, 1.55rem)',
       fontWeight:    600,
-      color:         'var(--cream)',
-      letterSpacing: '-0.005em',
+      fontStyle:     'italic',
+      color:         'var(--ink)',
+      letterSpacing: '-0.01em',
       lineHeight:    1.3,
       margin:        '2.25rem 0 0.75rem',
     }} {...props} />
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p style={{
-      fontFamily: 'var(--font-playfair)',
+      fontFamily: 'var(--font-body)',
       fontSize:   'clamp(1rem, 1.8vw, 1.125rem)',
-      fontWeight: 300,
-      color:      'var(--cream)',
-      lineHeight: 1.8,
-      margin:     '0 0 1.4rem',
+      fontWeight: 400,
+      color:      'var(--ink)',
+      lineHeight: 1.82,
+      margin:     '0 0 1.5rem',
     }} {...props} />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
     <ul style={{
-      fontFamily:  'var(--font-playfair)',
+      fontFamily:  'var(--font-body)',
       fontSize:    'clamp(1rem, 1.8vw, 1.125rem)',
-      fontWeight:  300,
-      color:       'var(--cream)',
-      lineHeight:  1.8,
-      margin:      '0 0 1.4rem',
+      fontWeight:  400,
+      color:       'var(--ink)',
+      lineHeight:  1.82,
+      margin:      '0 0 1.5rem',
       paddingLeft: '1.5rem',
     }} {...props} />
   ),
   ol: (props: React.HTMLAttributes<HTMLOListElement>) => (
     <ol style={{
-      fontFamily:  'var(--font-playfair)',
+      fontFamily:  'var(--font-body)',
       fontSize:    'clamp(1rem, 1.8vw, 1.125rem)',
-      fontWeight:  300,
-      color:       'var(--cream)',
-      lineHeight:  1.8,
-      margin:      '0 0 1.4rem',
+      fontWeight:  400,
+      color:       'var(--ink)',
+      lineHeight:  1.82,
+      margin:      '0 0 1.5rem',
       paddingLeft: '1.5rem',
     }} {...props} />
   ),
   li: (props: React.HTMLAttributes<HTMLLIElement>) => (
-    <li style={{ marginBottom: '0.4rem' }} {...props} />
+    <li style={{ marginBottom: '0.45rem' }} {...props} />
   ),
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote style={{
-      borderLeft:  '2px solid var(--gold)',
+      borderLeft:  '3px solid var(--green-600)',
       paddingLeft: '1.5rem',
       margin:      '2rem 0',
       fontStyle:   'italic',
-      color:       'var(--muted)',
+      color:       'var(--ink-muted)',
     }} {...props} />
   ),
   hr: () => (
     <hr style={{
       border:    'none',
-      borderTop: '1px solid rgba(250,248,243,0.12)',
+      borderTop: '1px solid var(--border)',
       margin:    '2.5rem 0',
     }} />
   ),
   strong: (props: React.HTMLAttributes<HTMLElement>) => (
-    <strong style={{ fontWeight: 600, color: 'var(--cream)' }} {...props} />
+    <strong style={{ fontWeight: 700, color: 'var(--ink)' }} {...props} />
   ),
   em: (props: React.HTMLAttributes<HTMLElement>) => (
-    <em style={{ fontStyle: 'italic', color: 'var(--muted)' }} {...props} />
+    <em style={{ fontStyle: 'italic', color: 'var(--ink-muted)' }} {...props} />
   ),
   code: (props: React.HTMLAttributes<HTMLElement>) => (
     <code style={{
-      fontFamily:      'var(--font-geist-mono)',
+      fontFamily:      'var(--font-mono)',
       fontSize:        '0.85em',
-      backgroundColor: 'rgba(250,248,243,0.1)',
-      color:           'var(--gold)',
+      backgroundColor: 'var(--surface-alt)',
+      color:           'var(--green-700)',
       padding:         '0.1em 0.35em',
       borderRadius:    '2px',
     }} {...props} />
@@ -142,26 +145,27 @@ export default async function BlogPost(
   return (
     <div style={{ minHeight: '100vh', paddingBottom: '6rem' }}>
 
-      {/* ── Back link ──────────────────────────────────────── */}
-      <div style={{ padding: 'clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 6vw, 5rem) 0' }}>
+      {/* ── Back link ──────────────────────────────────────────── */}
+      <div style={{ padding: 'clamp(2rem, 5vw, 3.5rem) var(--gutter) 0' }}>
         <Link href="/blog" style={{
-          fontFamily:    'var(--font-geist-mono)',
-          fontSize:      '0.55rem',
-          letterSpacing: '0.3em',
-          textTransform: 'uppercase',
-          color:         'var(--muted)',
+          fontFamily:     'var(--font-mono)',
+          fontSize:       '0.55rem',
+          letterSpacing:  '0.3em',
+          textTransform:  'uppercase',
+          color:          'var(--ink-muted)',
           textDecoration: 'none',
+          transition:     'color 200ms',
         }}>
           ← Resources
         </Link>
       </div>
 
-      {/* ── Article header ─────────────────────────────────── */}
-      <header style={{ padding: 'clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 6vw, 5rem) 0' }}>
+      {/* ── Article header ─────────────────────────────────────── */}
+      <header style={{ padding: 'clamp(2.5rem, 5vw, 4rem) var(--gutter) 0' }}>
         <div style={{ maxWidth: '740px' }}>
-          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
             <span style={{
-              fontFamily:    'var(--font-geist-mono)',
+              fontFamily:    'var(--font-mono)',
               fontSize:      '0.55rem',
               letterSpacing: '0.3em',
               textTransform: 'uppercase',
@@ -170,39 +174,40 @@ export default async function BlogPost(
               {CATEGORY_LABELS[post.category]}
             </span>
             <span style={{
-              fontFamily:    'var(--font-geist-mono)',
+              fontFamily:    'var(--font-mono)',
               fontSize:      '0.55rem',
               letterSpacing: '0.2em',
-              color:         'var(--muted)',
+              color:         'var(--ink-faint)',
             }}>
               {formatDate(post.date)}
             </span>
             <span style={{
-              fontFamily:    'var(--font-geist-mono)',
+              fontFamily:    'var(--font-mono)',
               fontSize:      '0.55rem',
               letterSpacing: '0.2em',
-              color:         'var(--muted)',
+              color:         'var(--ink-faint)',
             }}>
               {post.readingTime} min read
             </span>
           </div>
           <h1 style={{
-            fontFamily:    'var(--font-playfair)',
-            fontSize:      'clamp(2.25rem, 5vw, 4rem)',
+            fontFamily:    'var(--font-display)',
+            fontSize:      'clamp(2.25rem, 5.5vw, 4.25rem)',
             fontWeight:    600,
-            color:         'var(--cream)',
-            lineHeight:    1.05,
+            fontStyle:     'italic',
+            color:         'var(--ink)',
+            lineHeight:    1.06,
             letterSpacing: '-0.02em',
             margin:        '0 0 1.5rem',
           }}>
             {post.title}
           </h1>
           <p style={{
-            fontFamily: 'var(--font-playfair)',
+            fontFamily: 'var(--font-body)',
             fontSize:   'clamp(1.05rem, 2vw, 1.25rem)',
-            fontWeight: 300,
+            fontWeight: 400,
             fontStyle:  'italic',
-            color:      'var(--muted)',
+            color:      'var(--ink-muted)',
             lineHeight: 1.65,
             margin:     0,
           }}>
@@ -210,17 +215,17 @@ export default async function BlogPost(
           </p>
           <div style={{
             width:           '48px',
-            height:          '1px',
-            backgroundColor: 'var(--gold)',
+            height:          '3px',
+            backgroundColor: 'var(--green-600)',
             margin:          '2rem 0 0',
           }} />
         </div>
       </header>
 
-      {/* ── Article body ───────────────────────────────────── */}
+      {/* ── Article body ───────────────────────────────────────── */}
       <article style={{
-        padding: 'clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 6vw, 5rem)',
-        maxWidth: 'calc(740px + clamp(3rem, 12vw, 10rem))',
+        padding:  'clamp(2.5rem, 5vw, 4rem) var(--gutter)',
+        maxWidth: 'calc(740px + var(--gutter) * 2)',
       }}>
         <div style={{ maxWidth: '740px' }}>
           <MDXRemote
@@ -233,22 +238,23 @@ export default async function BlogPost(
               },
             }}
           />
+          <ContentCTA style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }} />
         </div>
       </article>
 
-      {/* ── Footer disclaimer ──────────────────────────────── */}
+      {/* ── Footer disclaimer ──────────────────────────────────── */}
       <footer style={{
-        margin:    '0 clamp(1.5rem, 6vw, 5rem)',
+        margin:     '0 var(--gutter)',
         paddingTop: '2rem',
-        borderTop:  '1px solid rgba(242,237,230,0.08)',
+        borderTop:  '1px solid var(--border-light)',
         maxWidth:   '740px',
       }}>
         <p style={{
-          fontFamily:    'var(--font-geist-mono)',
+          fontFamily:    'var(--font-mono)',
           fontSize:      '0.5rem',
           letterSpacing: '0.15em',
-          color:         'var(--muted)',
-          lineHeight:    1.8,
+          color:         'var(--ink-muted)',
+          lineHeight:    1.85,
         }}>
           NashPlus provides legal information and document automation. It is not a law firm
           and does not provide legal advice. It is not a substitute for advice from a licensed
