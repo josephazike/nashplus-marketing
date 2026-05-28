@@ -120,6 +120,18 @@ export default function RootLayout({
           </div>
         </nav>
         <RevealObserver />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type':    'Organization',
+              name:        'NashPlus',
+              url:         'https://nashplus.dev',
+              logo:        'https://nashplus.dev/og-logo.png',
+            }),
+          }}
+        />
         <div style={{ paddingTop: "3.75rem" }}>{children}</div>
       </body>
     </html>
