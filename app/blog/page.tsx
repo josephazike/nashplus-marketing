@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getAllPostMeta, CATEGORY_LABELS, CLUSTER_LABELS, groupByCluster, formatDate } from '@/lib/blog'
+import { getAllPostMeta, CATEGORY_LABELS, CLUSTER_LABELS, CLUSTER_ORDER, groupByCluster, formatDate } from '@/lib/blog'
 import type { Category, Cluster } from '@/lib/blog'
 import { LegalDisclaimer } from '@/components/LegalDisclaimer'
 
@@ -16,17 +16,28 @@ export const metadata: Metadata = {
   },
 }
 
+// Redesign colors for original 4; new additions for extended taxonomy.
 const CATEGORY_COLORS: Record<Category, string> = {
-  'law-explained': 'var(--green-600)',
-  'how-it-works':  '#4a7c5e',
-  'step-by-step':  '#3d6a8a',
-  'glossary':      '#7a5a8a',
+  'law-explained':     'var(--green-600)',
+  'how-it-works':      '#4a7c5e',
+  'step-by-step':      '#3d6a8a',
+  'glossary':          '#7a5a8a',
+  'court-process':     '#3d7a8a',
+  'parenting':         '#5a7a3d',
+  'legal-aid':         '#4a7c5e',
+  'emotional-support': '#7a5a7a',
+  'tools-and-apps':    '#3d6a7a',
+  'srl-strategy':      '#7a6a3d',
 }
 
 const CLUSTER_COLORS: Record<Cluster, string> = {
   'forms':               '#3d6a8a',
   'concepts':            'var(--green-600)',
   'procedure-and-fears': '#4a7c5e',
+  'self-representation': '#7a6a3d',
+  'parenting':           '#5a7a3d',
+  'support':             '#7a5a7a',
+  'tools':               '#3d6a7a',
   'glossary':            '#7a5a8a',
 }
 
@@ -36,8 +47,7 @@ export default function BlogIndex() {
   const rest     = posts.filter(p => !p.featured)
 
   const byCluster = groupByCluster(rest)
-  const activeClusters = (['forms', 'concepts', 'procedure-and-fears', 'glossary'] as Cluster[])
-    .filter(c => (byCluster.get(c) ?? []).length > 0)
+  const activeClusters = CLUSTER_ORDER.filter(c => (byCluster.get(c) ?? []).length > 0)
 
   return (
     <div style={{ minHeight: '100vh', paddingBottom: '6rem' }}>

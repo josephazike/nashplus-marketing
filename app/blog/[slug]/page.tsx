@@ -8,11 +8,18 @@ import { getPost, getAllSlugs, formatDate, CATEGORY_LABELS } from '@/lib/blog'
 import type { Category } from '@/lib/blog'
 import { ContentCTA }   from '@/components/ContentCTA'
 
+// Redesign colors for original 4; new additions for extended taxonomy.
 const CATEGORY_COLORS: Record<Category, string> = {
-  'law-explained': 'var(--green-600)',
-  'how-it-works':  '#4a7c5e',
-  'step-by-step':  '#3d6a8a',
-  'glossary':      '#7a5a8a',
+  'law-explained':     'var(--green-600)',
+  'how-it-works':      '#4a7c5e',
+  'step-by-step':      '#3d6a8a',
+  'glossary':          '#7a5a8a',
+  'court-process':     '#3d7a8a',
+  'parenting':         '#5a7a3d',
+  'legal-aid':         '#4a7c5e',
+  'emotional-support': '#7a5a7a',
+  'tools-and-apps':    '#3d6a7a',
+  'srl-strategy':      '#7a6a3d',
 }
 
 export async function generateStaticParams() {
@@ -29,12 +36,17 @@ export async function generateMetadata(
     title:       `${post.title} — NashPlus`,
     description: post.description,
     openGraph: {
+      title:         post.title,
+      description:   post.description,
+      url:           `https://nashplus.dev/blog/${post.slug}`,
+      siteName:      'Nash+',
+      type:          'article',
+      publishedTime: post.date,
+    },
+    twitter: {
+      card:        'summary_large_image',
       title:       post.title,
       description: post.description,
-      url:         `https://nashplus.dev/blog/${post.slug}`,
-      siteName:    'NashPlus',
-      type:        'article',
-      publishedTime: post.date,
     },
   }
 }
@@ -142,8 +154,49 @@ export default async function BlogPost(
   const post = getPost(slug)
   if (!post) notFound()
 
+  const canonicalUrl = `https://nashplus.dev/blog/${post.slug}`
+  const nashplusOrg = { '@type': 'Organization', name: 'NashPlus', url: 'https://nashplus.dev' }
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type':            'BlogPosting',
+        headline:           post.title,
+        description:        post.description,
+        datePublished:      post.date,
+        dateModified:       post.last_reviewed,
+        inLanguage:         'en-CA',
+        mainEntityOfPage:   canonicalUrl,
+        author:             post.author === 'Nash+'
+          ? nashplusOrg
+          : { '@type': 'Person', name: post.author },
+        publisher: {
+          '@type': 'Organization',
+          name:    'NashPlus',
+          url:     'https://nashplus.dev',
+          logo:    { '@type': 'ImageObject', url: 'https://nashplus.dev/og-logo.png' },
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home',      item: 'https://nashplus.dev' },
+          { '@type': 'ListItem', position: 2, name: 'Resources', item: 'https://nashplus.dev/blog' },
+          { '@type': 'ListItem', position: 3, name: post.title,  item: canonicalUrl },
+        ],
+      },
+    ],
+  }
+
   return (
     <div style={{ minHeight: '100vh', paddingBottom: '6rem' }}>
+
+      {/* ── JSON-LD ───────────────────────────────────────────── */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       {/* ── Back link ──────────────────────────────────────────── */}
       <div style={{ padding: 'clamp(2rem, 5vw, 3.5rem) var(--gutter) 0' }}>
@@ -188,6 +241,14 @@ export default async function BlogPost(
               color:         'var(--ink-faint)',
             }}>
               {post.readingTime} min read
+            </span>
+            <span style={{
+              fontFamily:    'var(--font-mono)',
+              fontSize:      '0.55rem',
+              letterSpacing: '0.2em',
+              color:         'var(--ink-faint)',
+            }}>
+              {post.author}
             </span>
           </div>
           <h1 style={{
