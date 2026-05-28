@@ -307,6 +307,7 @@ export default async function BlogPost(
             source={post.content}
             components={mdxComponents}
             options={{
+              blockJS: false,
               mdxOptions: {
                 remarkPlugins: [remarkGfm],
                 rehypePlugins: [rehypeSlug],
