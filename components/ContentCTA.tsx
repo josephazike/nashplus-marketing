@@ -3,7 +3,7 @@
 // Never links to Legal Aid, the Law Society Referral Service, or any external service.
 // UPL-safe: no banned phrases, no outcome predictions, no "guaranteed".
 
-const PRODUCT_SIGNUP_URL = 'https://web-taupe-omega-74.vercel.app/signup'
+import { SIGNUP_URL as PRODUCT_SIGNUP_URL } from '@/lib/config'
 
 interface ContentCTAProps {
   heading?: string

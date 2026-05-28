@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { getAllPostMeta, formatDate, CATEGORY_LABELS } from '@/lib/blog'
-
-const PRODUCT_URL = 'https://web-taupe-omega-74.vercel.app/signup'
+import { SIGNUP_URL as PRODUCT_URL } from '@/lib/config'
 
 const VALUE_PROPS = [
   {

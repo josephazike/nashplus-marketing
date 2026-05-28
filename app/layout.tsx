@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Lora, Geist_Mono } from "next/font/google";
 import { RevealObserver } from "@/components/RevealObserver";
+import { SIGNUP_URL } from "@/lib/config";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -102,7 +103,7 @@ export default function RootLayout({
               Resources
             </a>
             <a
-              href="https://web-taupe-omega-74.vercel.app/signup"
+              href={SIGNUP_URL}
               style={{
                 fontFamily:      "var(--font-mono)",
                 fontSize:        "0.6rem",
