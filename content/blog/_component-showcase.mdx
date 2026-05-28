@@ -1,0 +1,120 @@
+---
+title: "Nash+ MDX Component Showcase"
+description: "Internal preview of the five reusable MDX visual components. Not for publication."
+date: 2026-05-28
+author: "Nash+"
+category: law-explained
+draft: true
+---
+
+This article is a **draft preview** for the founder. It exercises every MDX visual component so you can review rendering before content production begins. It does not appear in the article index or sitemap.
+
+---
+
+## 1. Callout
+
+Four types: `note`, `tip`, `warning`, `legal`.
+
+<Callout type="note">
+  Form 13 is used when the proceeding involves support claims only. If property division is also at issue, you need Form 13.1.
+</Callout>
+
+<Callout type="tip" title="Practical tip">
+  Gather three years of tax returns and notices of assessment before your first court date. Courts regularly adjourn proceedings because financial disclosure is incomplete.
+</Callout>
+
+<Callout type="warning" title="Deadline">
+  Financial statements must be served and filed at least 30 days before a conference or motion at which support will be decided (Family Law Rules, Rule 13(6)).
+</Callout>
+
+<Callout type="legal">
+  This article provides legal information, not legal advice. The rules described apply to Ontario family proceedings. For advice specific to your situation, consult a licensed Ontario lawyer.
+</Callout>
+
+---
+
+## 2. ComparisonTable
+
+<ComparisonTable
+  columns={["", "Form 13", "Form 13.1"]}
+  rows={[
+    ["Used for", "Support claims only", "Property division + support, or property only"],
+    ["Includes property section?", "No", "Yes"],
+    ["Who must file", "Party claiming or responding to support", "Party claiming or responding to property or support"],
+    ["Schedules required", "Schedule A (income), Schedule B (expenses)", "Schedule A, B, and C (property)"],
+    ["Typical length", "Shorter", "Longer"],
+  ]}
+  caption="Family Law Rules, O. Reg. 114/99, Rule 13"
+/>
+
+---
+
+## 3. ProcessTimeline
+
+<ProcessTimeline
+  heading="Stages of an Ontario family proceeding"
+  steps={[
+    {
+      title: "File your application",
+      description: "Complete Form 8A (Application -- General) and file it at the courthouse. Pay the filing fee. You are now the Applicant.",
+      aside: "Family Law Rules, Rule 8"
+    },
+    {
+      title: "Serve the other party",
+      description: "Serve the filed application on the other party within 30 days of filing. Service must be personal or by an accepted alternative method.",
+      aside: "Family Law Rules, Rule 6"
+    },
+    {
+      title: "Case conference",
+      description: "The first court event is usually a case conference. The judge helps the parties identify issues, explore settlement, and set a schedule.",
+      aside: "Family Law Rules, Rule 17"
+    },
+    {
+      title: "Settlement conference",
+      description: "If issues remain unresolved after the case conference, the court schedules a settlement conference to narrow the dispute.",
+    },
+    {
+      title: "Trial (if required)",
+      description: "If the parties cannot settle, the matter proceeds to trial. A judge hears evidence from both sides and makes a final order.",
+    },
+  ]}
+/>
+
+---
+
+## 4. Checklist
+
+<Checklist
+  heading="Documents to gather for Form 13 financial disclosure"
+  items={[
+    "Income tax returns for the current year and the two preceding years (T1 General)",
+    "Notices of Assessment for the same three years",
+    "Most recent pay stub (within 12 months)",
+    "Statement of Employment Insurance benefits (if receiving EI)",
+    "Most recent statements for all bank and savings accounts",
+    "Most recent statements for all credit cards, lines of credit, and loans",
+    "Most recent mortgage statement for each property",
+    "Certificate of Financial Disclosure (Form 13A) listing all documents served",
+  ]}
+/>
+
+---
+
+## 5. DecisionTree
+
+<DecisionTree
+  question="Which financial statement do I need to file?"
+  branches={[
+    {
+      condition: "My proceeding involves support only (no property division claims)",
+      outcome: "File Form 13 -- Financial Statement (Support Claims)",
+      outcomeMeta: "Family Law Rules, Rule 13(3.1)(1)",
+    },
+    {
+      condition: "My proceeding involves property division, or property plus support",
+      outcome: "File Form 13.1 -- Financial Statement (Property and Support Claims)",
+      outcomeMeta: "Family Law Rules, Rule 13(3.1)(2)",
+    },
+  ]}
+  note="If you are unsure whether property is at issue in your proceeding, review your application or answer, or consult a family lawyer."
+/>
