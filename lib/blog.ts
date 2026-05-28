@@ -122,6 +122,7 @@ export interface PostMeta {
   tags:          string[]    // searchable keywords
   sources:       string[]    // authoritative citations (statute name, rule number, etc.)
   featured:      boolean
+  draft:         boolean     // true = excluded from index, sitemap, and static params
   readingTime:   number
 }
 
@@ -145,38 +146,9 @@ function resolveCluster(data: Record<string, unknown>): Cluster {
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
-export function getAllPostMeta(): PostMeta[] {
-  const files = fs.readdirSync(BLOG_DIR).filter(f => f.endsWith('.mdx'))
-  return files
-    .map(filename => {
-      const slug = filename.replace(/\.mdx$/, '')
-      const raw  = fs.readFileSync(path.join(BLOG_DIR, filename), 'utf-8')
-      const { data, content } = matter(raw)
-      const category = (data.category as Category | undefined) ?? 'law-explained'
-      return {
-        slug,
-        title:         data.title       as string,
-        description:   data.description as string,
-        summary:       (data.summary    as string | undefined) ?? (data.description as string),
-        date:          data.date        as string,
-        last_reviewed: (data.last_reviewed as string | undefined) ?? (data.date as string),
-        author:        (data.author     as string | undefined) ?? 'Nash+',
-        category,
-        cluster:       resolveCluster(data),
-        jurisdiction:  (data.jurisdiction as string | undefined) ?? 'ontario',
-        tags:          (data.tags       as string[] | undefined) ?? [],
-        sources:       (data.sources    as string[] | undefined) ?? [],
-        featured:      (data.featured   as boolean | undefined) ?? false,
-        readingTime:   readingTime(content),
-      } satisfies PostMeta
-    })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-}
-
-export function getPost(slug: string): Post | null {
-  const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
-  if (!fs.existsSync(filePath)) return null
-  const raw = fs.readFileSync(filePath, 'utf-8')
+function parseMeta(filename: string): PostMeta {
+  const slug = filename.replace(/\.mdx$/, '')
+  const raw  = fs.readFileSync(path.join(BLOG_DIR, filename), 'utf-8')
   const { data, content } = matter(raw)
   const category = (data.category as Category | undefined) ?? 'law-explained'
   return {
@@ -193,15 +165,36 @@ export function getPost(slug: string): Post | null {
     tags:          (data.tags       as string[] | undefined) ?? [],
     sources:       (data.sources    as string[] | undefined) ?? [],
     featured:      (data.featured   as boolean | undefined) ?? false,
+    draft:         (data.draft      as boolean | undefined) ?? false,
     readingTime:   readingTime(content),
-    content,
-  }
+  } satisfies PostMeta
 }
 
+export function getAllPostMeta(): PostMeta[] {
+  return fs.readdirSync(BLOG_DIR)
+    .filter(f => f.endsWith('.mdx'))
+    .map(parseMeta)
+    .filter(p => !p.draft)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+}
+
+// Returns the post including draft posts (accessible by direct URL for preview).
+export function getPost(slug: string): Post | null {
+  const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
+  if (!fs.existsSync(filePath)) return null
+  const raw = fs.readFileSync(filePath, 'utf-8')
+  const { data, content } = matter(raw)
+  const meta = parseMeta(`${slug}.mdx`)
+  return { ...meta, content }
+}
+
+// Returns only non-draft slugs (used for static param generation and sitemap).
 export function getAllSlugs(): string[] {
   return fs.readdirSync(BLOG_DIR)
     .filter(f => f.endsWith('.mdx'))
-    .map(f => f.replace(/\.mdx$/, ''))
+    .map(parseMeta)
+    .filter(p => !p.draft)
+    .map(p => p.slug)
 }
 
 export function formatDate(iso: string): string {

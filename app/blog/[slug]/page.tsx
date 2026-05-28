@@ -7,6 +7,13 @@ import rehypeSlug       from 'rehype-slug'
 import { getPost, getAllSlugs, formatDate, CATEGORY_LABELS } from '@/lib/blog'
 import type { Category } from '@/lib/blog'
 import { ContentCTA }   from '@/components/ContentCTA'
+import {
+  Callout,
+  ComparisonTable,
+  ProcessTimeline,
+  Checklist,
+  DecisionTree,
+} from '@/components/mdx'
 
 // Redesign colors for original 4; new additions for extended taxonomy.
 const CATEGORY_COLORS: Record<Category, string> = {
@@ -52,6 +59,13 @@ export async function generateMetadata(
 }
 
 const mdxComponents = {
+  // ── Reusable article components ────────────────────────────────────────────
+  Callout,
+  ComparisonTable,
+  ProcessTimeline,
+  Checklist,
+  DecisionTree,
+  // ── Prose element overrides ────────────────────────────────────────────────
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2 style={{
       fontFamily:    'var(--font-display)',
