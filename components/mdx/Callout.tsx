@@ -120,8 +120,8 @@ export function Callout({ type = 'note', title, children }: CalloutProps) {
           </p>
           <div style={{
             fontFamily: 'var(--font-body)',
-            fontSize:   'clamp(0.9375rem, 1.6vw, 1rem)',
-            lineHeight: 1.72,
+            fontSize:   'var(--text-body)',
+            lineHeight: 'var(--lh-body)',
             color:      'var(--ink)',
           }}>
             {children}
