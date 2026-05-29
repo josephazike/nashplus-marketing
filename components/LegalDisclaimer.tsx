@@ -10,11 +10,11 @@ export function LegalDisclaimer({ style }: LegalDisclaimerProps) {
   return (
     <p
       style={{
-        fontFamily:    'var(--font-geist-mono)',
+        fontFamily:    'var(--font-mono)',
         fontSize:      '0.5rem',
         letterSpacing: '0.15em',
-        color:         'var(--muted)',
-        lineHeight:    1.8,
+        color:         'var(--ink-muted)',
+        lineHeight:    1.85,
         maxWidth:      '680px',
         margin:        0,
         ...style,

@@ -1,69 +1,68 @@
-import fs from 'fs'
+import fs   from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
-// ── Legacy category type (used by existing 4 posts) ───────────────────────────
-export type Category = 'law-explained' | 'how-it-works' | 'step-by-step' | 'glossary'
+// ── Re-export client-safe types and display utilities ─────────────────────────
+// Types, labels, and formatDate live in blog-display.ts (no fs/path imports)
+// so they can be safely imported by client components.
+// Server-side consumers can import from either file; blog.ts re-exports all.
+export type {
+  Category,
+  Cluster,
+  Jurisdiction,
+  PostMeta,
+} from '@/lib/blog-display'
+export {
+  CATEGORY_LABELS,
+  CLUSTER_LABELS,
+  formatDate,
+} from '@/lib/blog-display'
 
-export const CATEGORY_LABELS: Record<Category, string> = {
-  'law-explained': 'Law Explained',
-  'how-it-works':  'How It Works',
-  'step-by-step':  'Step by Step',
-  'glossary':      'Glossary',
-}
+import type { Category, Cluster, PostMeta } from '@/lib/blog-display'
 
 // ── Content clusters ──────────────────────────────────────────────────────────
-// Four clusters that organize the library by reader intent.
-// jurisdiction-specific facts (form numbers, rule citations, dollar thresholds)
-// live in article frontmatter / body — never hardcoded in cluster definitions.
+// Category -> Cluster mapping:
+//   law-explained     -> concepts
+//   how-it-works      -> procedure-and-fears
+//   step-by-step      -> forms
+//   glossary          -> glossary
+//   court-process     -> procedure-and-fears
+//   parenting         -> parenting
+//   legal-aid         -> support
+//   emotional-support -> support
+//   tools-and-apps    -> tools
+//   srl-strategy      -> self-representation
+//
+// Display order: SRL Playbook first (differentiator), Support, Parenting, then rest.
 
-export type Cluster = 'forms' | 'concepts' | 'procedure-and-fears' | 'glossary'
-
-export const CLUSTER_LABELS: Record<Cluster, string> = {
-  'forms':               'Forms',
-  'concepts':            'Concepts',
-  'procedure-and-fears': 'Procedure & Fears',
-  'glossary':            'Glossary',
-}
-
-// Maps the legacy Category values to Clusters so existing posts are grouped
-// without any frontmatter changes.
 const CATEGORY_TO_CLUSTER: Record<Category, Cluster> = {
-  'law-explained': 'concepts',
-  'how-it-works':  'procedure-and-fears',
-  'step-by-step':  'forms',
-  'glossary':      'glossary',
+  'law-explained':     'concepts',
+  'how-it-works':      'procedure-and-fears',
+  'step-by-step':      'forms',
+  'glossary':          'glossary',
+  'court-process':     'procedure-and-fears',
+  'parenting':         'parenting',
+  'legal-aid':         'support',
+  'emotional-support': 'support',
+  'tools-and-apps':    'tools',
+  'srl-strategy':      'self-representation',
 }
 
-// ── Jurisdiction ──────────────────────────────────────────────────────────────
-// Every article declares a jurisdiction. Currently always 'ontario'.
-// To add a new province:
-//   1. Write articles with `jurisdiction: 'bc'` in frontmatter.
-//   2. Add IP-detection logic in middleware (e.g., read Vercel x-vercel-ip-country
-//      header, resolve to province, set a cookie or header).
-//   3. In the blog index server component, read that header/cookie and call
-//      `getAllPostMeta().filter(p => p.jurisdiction === detectedJurisdiction)`.
-//   No component rewrites required — components render whatever content provides.
+// Canonical display order -- exported so blog index and groupByCluster stay in sync.
+// SRL Playbook (self-representation) leads as the product differentiator.
+// Support & Legal Aid second; Parenting third. Remaining clusters follow.
+export const CLUSTER_ORDER: Cluster[] = [
+  'self-representation',
+  'support',
+  'parenting',
+  'forms',
+  'concepts',
+  'procedure-and-fears',
+  'tools',
+  'glossary',
+]
 
-export type Jurisdiction = string // 'ontario' | 'bc' | 'ab' | ...
-
-// ── PostMeta ──────────────────────────────────────────────────────────────────
-export interface PostMeta {
-  slug:          string
-  title:         string
-  description:   string
-  summary:       string      // short card summary; falls back to description
-  date:          string
-  last_reviewed: string      // ISO date; falls back to date
-  category:      Category
-  cluster:       Cluster     // derived from category if not in frontmatter
-  jurisdiction:  Jurisdiction
-  tags:          string[]    // searchable keywords
-  sources:       string[]    // authoritative citations (statute name, rule number, etc.)
-  featured:      boolean
-  readingTime:   number
-}
-
+// ── Post interface (server-only: includes MDX content string) ─────────────────
 export interface Post extends PostMeta {
   content: string
 }
@@ -79,42 +78,14 @@ function readingTime(content: string): number {
 function resolveCluster(data: Record<string, unknown>): Cluster {
   if (data.cluster) return data.cluster as Cluster
   const cat = (data.category as Category | undefined) ?? 'law-explained'
-  return CATEGORY_TO_CLUSTER[cat]
+  return CATEGORY_TO_CLUSTER[cat] ?? 'concepts'
 }
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
-export function getAllPostMeta(): PostMeta[] {
-  const files = fs.readdirSync(BLOG_DIR).filter(f => f.endsWith('.mdx'))
-  return files
-    .map(filename => {
-      const slug = filename.replace(/\.mdx$/, '')
-      const raw  = fs.readFileSync(path.join(BLOG_DIR, filename), 'utf-8')
-      const { data, content } = matter(raw)
-      const category = (data.category as Category | undefined) ?? 'law-explained'
-      return {
-        slug,
-        title:         data.title       as string,
-        description:   data.description as string,
-        summary:       (data.summary    as string | undefined) ?? (data.description as string),
-        date:          data.date        as string,
-        last_reviewed: (data.last_reviewed as string | undefined) ?? (data.date as string),
-        category,
-        cluster:       resolveCluster(data),
-        jurisdiction:  (data.jurisdiction as string | undefined) ?? 'ontario',
-        tags:          (data.tags       as string[] | undefined) ?? [],
-        sources:       (data.sources    as string[] | undefined) ?? [],
-        featured:      (data.featured   as boolean | undefined) ?? false,
-        readingTime:   readingTime(content),
-      } satisfies PostMeta
-    })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-}
-
-export function getPost(slug: string): Post | null {
-  const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
-  if (!fs.existsSync(filePath)) return null
-  const raw = fs.readFileSync(filePath, 'utf-8')
+function parseMeta(filename: string): PostMeta {
+  const slug = filename.replace(/\.mdx$/, '')
+  const raw  = fs.readFileSync(path.join(BLOG_DIR, filename), 'utf-8')
   const { data, content } = matter(raw)
   const category = (data.category as Category | undefined) ?? 'law-explained'
   return {
@@ -124,36 +95,52 @@ export function getPost(slug: string): Post | null {
     summary:       (data.summary    as string | undefined) ?? (data.description as string),
     date:          data.date        as string,
     last_reviewed: (data.last_reviewed as string | undefined) ?? (data.date as string),
+    author:        (data.author     as string | undefined) ?? 'Nash+',
     category,
     cluster:       resolveCluster(data),
     jurisdiction:  (data.jurisdiction as string | undefined) ?? 'ontario',
     tags:          (data.tags       as string[] | undefined) ?? [],
     sources:       (data.sources    as string[] | undefined) ?? [],
     featured:      (data.featured   as boolean | undefined) ?? false,
+    draft:         (data.draft      as boolean | undefined) ?? false,
     readingTime:   readingTime(content),
-    content,
-  }
+  } satisfies PostMeta
 }
 
+export function getAllPostMeta(): PostMeta[] {
+  return fs.readdirSync(BLOG_DIR)
+    .filter(f => f.endsWith('.mdx'))
+    .map(parseMeta)
+    .filter(p => !p.draft)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+}
+
+// Returns the post including draft posts (accessible by direct URL for preview).
+export function getPost(slug: string): Post | null {
+  const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
+  if (!fs.existsSync(filePath)) return null
+  const raw = fs.readFileSync(filePath, 'utf-8')
+  const meta = parseMeta(`${slug}.mdx`)
+  const { content } = matter(raw)
+  return { ...meta, content }
+}
+
+// Returns only non-draft slugs (used for static param generation and sitemap).
 export function getAllSlugs(): string[] {
   return fs.readdirSync(BLOG_DIR)
     .filter(f => f.endsWith('.mdx'))
-    .map(f => f.replace(/\.mdx$/, ''))
+    .map(parseMeta)
+    .filter(p => !p.draft)
+    .map(p => p.slug)
 }
 
-export function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('en-CA', {
-    year: 'numeric', month: 'long', day: 'numeric',
-  })
-}
-
-// Returns posts grouped by cluster, preserving sort order within each group.
+// Returns posts grouped by cluster in CLUSTER_ORDER, preserving sort order within each group.
 export function groupByCluster(posts: PostMeta[]): Map<Cluster, PostMeta[]> {
-  const order: Cluster[] = ['forms', 'concepts', 'procedure-and-fears', 'glossary']
   const map = new Map<Cluster, PostMeta[]>()
-  for (const cluster of order) map.set(cluster, [])
+  for (const cluster of CLUSTER_ORDER) map.set(cluster, [])
   for (const post of posts) {
-    map.get(post.cluster)!.push(post)
+    const bucket = map.get(post.cluster)
+    if (bucket) bucket.push(post)
   }
   return map
 }
