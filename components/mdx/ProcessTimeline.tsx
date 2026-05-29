@@ -76,22 +76,23 @@ export function ProcessTimeline({ steps, heading }: ProcessTimelineProps) {
               {/* Step content */}
               <div style={{ paddingBottom: isLast ? 0 : '2rem', paddingTop: '0.25rem' }}>
                 <p style={{
-                  fontFamily:    'var(--font-display)',
-                  fontSize:      'clamp(1.05rem, 2vw, 1.2rem)',
-                  fontWeight:    600,
-                  fontStyle:     'normal',  // roman -- consistent with H2/H3 body roman treatment
-                  color:         'var(--ink)',
-                  margin:        '0 0 0.5rem',
-                  lineHeight:    1.3,
-                  letterSpacing: '-0.01em',
-                }}>
+                  fontFamily:        'var(--font-display)',
+                  fontSize:          'var(--text-h3)',
+                  fontWeight:        600,
+                  fontStyle:         'normal',
+                  fontOpticalSizing: 'auto',
+                  color:             'var(--ink)',
+                  margin:            '0 0 0.45rem',
+                  lineHeight:        'var(--lh-heading)',
+                  letterSpacing:     '-0.01em',
+                } as React.CSSProperties}>
                   {step.title}
                 </p>
                 <p style={{
                   fontFamily: 'var(--font-body)',
-                  fontSize:   'clamp(0.9375rem, 1.6vw, 1rem)',
+                  fontSize:   'var(--text-body)',
                   color:      'var(--ink)',
-                  lineHeight: 1.75,
+                  lineHeight: 'var(--lh-body)',
                   margin:     0,
                 }}>
                   {step.description}
@@ -99,11 +100,11 @@ export function ProcessTimeline({ steps, heading }: ProcessTimelineProps) {
                 {step.aside && (
                   <p style={{
                     fontFamily:    'var(--font-mono)',
-                    fontSize:      '0.55rem',
+                    fontSize:      'var(--text-meta)',
                     letterSpacing: '0.12em',
-                    color:         'var(--ink-muted)',
-                    margin:        '0.6rem 0 0',
-                    lineHeight:    1.65,
+                    color:         'var(--ink-secondary)',
+                    margin:        '0.5rem 0 0',
+                    lineHeight:    1.6,
                   }}>
                     {step.aside}
                   </p>

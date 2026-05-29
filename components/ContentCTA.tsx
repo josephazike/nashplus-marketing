@@ -40,26 +40,27 @@ export function ContentCTA({
       </p>
 
       <h3 style={{
-        fontFamily:    'var(--font-display)',
-        fontSize:      'clamp(1.35rem, 2.5vw, 1.8rem)',
-        fontWeight:    600,
-        fontStyle:     'italic',
-        color:         'var(--ink)',
-        letterSpacing: '-0.015em',
-        lineHeight:    1.2,
-        margin:        '0 0 0.75rem',
-      }}>
+        fontFamily:        'var(--font-display)',
+        fontSize:          'var(--text-h2)',
+        fontWeight:        600,
+        fontStyle:         'normal',
+        fontOpticalSizing: 'auto',
+        color:             'var(--ink)',
+        letterSpacing:     '-0.02em',
+        lineHeight:        'var(--lh-heading)',
+        margin:            '0 0 0.75rem',
+      } as React.CSSProperties}>
         {heading}
       </h3>
 
       <p style={{
         fontFamily: 'var(--font-body)',
-        fontSize:   'clamp(0.95rem, 1.8vw, 1.05rem)',
-        fontStyle:  'normal',  // direct and clear, not editorial-soft
-        color:      'var(--ink-muted)',
-        lineHeight: 1.7,
+        fontSize:   'var(--text-body)',
+        fontStyle:  'normal',
+        color:      'var(--ink-secondary)',
+        lineHeight: 'var(--lh-body)',
         margin:     '0 0 1.75rem',
-        maxWidth:   '520px',
+        maxWidth:   '52ch',
       }}>
         {body}
       </p>

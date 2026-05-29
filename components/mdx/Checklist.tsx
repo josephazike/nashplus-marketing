@@ -60,9 +60,9 @@ export function Checklist({ items, heading }: ChecklistProps) {
 
             <span style={{
               fontFamily: 'var(--font-body)',
-              fontSize:   'clamp(0.9375rem, 1.6vw, 1rem)',
+              fontSize:   'var(--text-body)',
               color:      'var(--ink)',
-              lineHeight: 1.72,
+              lineHeight: 'var(--lh-body)',
               flex:       1,
             }}>
               {item}
