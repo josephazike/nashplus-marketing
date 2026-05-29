@@ -6,7 +6,16 @@ import remarkGfm        from 'remark-gfm'
 import rehypeSlug       from 'rehype-slug'
 import { getPost, getAllSlugs, formatDate, CATEGORY_LABELS } from '@/lib/blog'
 import type { Category } from '@/lib/blog'
+
+// Escape <, >, & so JSON-LD strings cannot break out of the script tag.
+function safeJsonLd(obj: unknown): string {
+  return JSON.stringify(obj)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+}
 import { ContentCTA }   from '@/components/ContentCTA'
+import { SiteFooter }   from '@/components/SiteFooter'
 import {
   Callout,
   ComparisonTable,
@@ -15,18 +24,17 @@ import {
   DecisionTree,
 } from '@/components/mdx'
 
-// Redesign colors for original 4; new additions for extended taxonomy.
 const CATEGORY_COLORS: Record<Category, string> = {
-  'law-explained':     'var(--green-600)',
-  'how-it-works':      '#4a7c5e',
-  'step-by-step':      '#3d6a8a',
-  'glossary':          '#7a5a8a',
-  'court-process':     '#3d7a8a',
-  'parenting':         '#5a7a3d',
-  'legal-aid':         '#4a7c5e',
-  'emotional-support': '#7a5a7a',
-  'tools-and-apps':    '#3d6a7a',
-  'srl-strategy':      '#7a6a3d',
+  'law-explained':     'var(--green-700)',
+  'how-it-works':      'var(--green-700)',
+  'step-by-step':      'var(--green-700)',
+  'glossary':          'var(--green-700)',
+  'court-process':     'var(--green-700)',
+  'parenting':         'var(--green-700)',
+  'legal-aid':         'var(--green-700)',
+  'emotional-support': 'var(--green-700)',
+  'tools-and-apps':    'var(--green-700)',
+  'srl-strategy':      'var(--green-700)',
 }
 
 export async function generateStaticParams() {
@@ -59,19 +67,18 @@ export async function generateMetadata(
 }
 
 const mdxComponents = {
-  // ── Reusable article components ────────────────────────────────────────────
   Callout,
   ComparisonTable,
   ProcessTimeline,
   Checklist,
   DecisionTree,
-  // ── Prose element overrides ────────────────────────────────────────────────
+  // ── Prose overrides ────────────────────────────────────────────────────────
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2 style={{
       fontFamily:    'var(--font-display)',
       fontSize:      'clamp(1.5rem, 3vw, 2.1rem)',
       fontWeight:    600,
-      fontStyle:     'italic',
+      fontStyle:     'normal',  // roman -- not italic (Decision 2)
       color:         'var(--ink)',
       letterSpacing: '-0.015em',
       lineHeight:    1.2,
@@ -85,7 +92,7 @@ const mdxComponents = {
       fontFamily:    'var(--font-display)',
       fontSize:      'clamp(1.2rem, 2.5vw, 1.55rem)',
       fontWeight:    600,
-      fontStyle:     'italic',
+      fontStyle:     'normal',  // roman -- not italic (Decision 2)
       color:         'var(--ink)',
       letterSpacing: '-0.01em',
       lineHeight:    1.3,
@@ -98,7 +105,7 @@ const mdxComponents = {
       fontSize:   'clamp(1rem, 1.8vw, 1.125rem)',
       fontWeight: 400,
       color:      'var(--ink)',
-      lineHeight: 1.82,
+      lineHeight: 1.88,  // increased from 1.82 for long-form legal text
       margin:     '0 0 1.5rem',
     }} {...props} />
   ),
@@ -108,7 +115,7 @@ const mdxComponents = {
       fontSize:    'clamp(1rem, 1.8vw, 1.125rem)',
       fontWeight:  400,
       color:       'var(--ink)',
-      lineHeight:  1.82,
+      lineHeight:  1.88,
       margin:      '0 0 1.5rem',
       paddingLeft: '1.5rem',
     }} {...props} />
@@ -119,7 +126,7 @@ const mdxComponents = {
       fontSize:    'clamp(1rem, 1.8vw, 1.125rem)',
       fontWeight:  400,
       color:       'var(--ink)',
-      lineHeight:  1.82,
+      lineHeight:  1.88,
       margin:      '0 0 1.5rem',
       paddingLeft: '1.5rem',
     }} {...props} />
@@ -158,6 +165,18 @@ const mdxComponents = {
       padding:         '0.1em 0.35em',
       borderRadius:    '2px',
     }} {...props} />
+  ),
+  // Internal link treatment: green-700 underline, subtle decoration
+  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+    <a style={{
+      color:                  'var(--green-700)',
+      textDecoration:         'underline',
+      textUnderlineOffset:    '3px',
+      textDecorationColor:    'var(--green-200)',
+      transition:             'text-decoration-color 200ms',
+    }}
+    className="prose-link"
+    {...props} />
   ),
 }
 
@@ -204,12 +223,12 @@ export default async function BlogPost(
   }
 
   return (
-    <div style={{ minHeight: '100vh', paddingBottom: '6rem' }}>
+    <div style={{ minHeight: '100vh', paddingBottom: '4rem' }}>
 
       {/* ── JSON-LD ───────────────────────────────────────────── */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
 
       {/* ── Back link ──────────────────────────────────────────── */}
@@ -223,30 +242,61 @@ export default async function BlogPost(
           textDecoration: 'none',
           transition:     'color 200ms',
         }}>
-          ← Resources
+          &#8592; Resources
         </Link>
       </div>
 
       {/* ── Article header ─────────────────────────────────────── */}
-      <header style={{ padding: 'clamp(2.5rem, 5vw, 4rem) var(--gutter) 0' }}>
+      {/* Order: H1 title first, then description lede, then divider, then metadata. */}
+      {/* Rationale: heading-hierarchy guideline -- metadata should not precede H1. */}
+      <header style={{ padding: 'clamp(2rem, 4vw, 3rem) var(--gutter) 0' }}>
         <div style={{ maxWidth: '740px' }}>
-          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+
+          {/* H1 title -- italic Cormorant (article title is a display moment) */}
+          <h1 style={{
+            fontFamily:    'var(--font-display)',
+            fontSize:      'clamp(2.25rem, 5.5vw, 4.25rem)',
+            fontWeight:    600,
+            fontStyle:     'italic',
+            color:         'var(--ink)',
+            lineHeight:    1.06,
+            letterSpacing: '-0.02em',
+            margin:        '0 0 1.25rem',
+          }}>
+            {post.title}
+          </h1>
+
+          {/* Description lede */}
+          <p style={{
+            fontFamily: 'var(--font-body)',
+            fontSize:   'clamp(1.05rem, 2vw, 1.25rem)',
+            fontWeight: 400,
+            fontStyle:  'italic',
+            color:      'var(--ink-muted)',
+            lineHeight: 1.65,
+            margin:     '0 0 1.75rem',
+          }}>
+            {post.description}
+          </p>
+
+          {/* Green rule divider */}
+          <div style={{
+            width:           '48px',
+            height:          '3px',
+            backgroundColor: 'var(--green-600)',
+            margin:          '0 0 1.5rem',
+          }} />
+
+          {/* Metadata row -- below H1, secondary weight */}
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
             <span style={{
               fontFamily:    'var(--font-mono)',
-              fontSize:      '0.55rem',
-              letterSpacing: '0.3em',
+              fontSize:      '0.625rem',
+              letterSpacing: '0.28em',
               textTransform: 'uppercase',
               color:         CATEGORY_COLORS[post.category],
             }}>
               {CATEGORY_LABELS[post.category]}
-            </span>
-            <span style={{
-              fontFamily:    'var(--font-mono)',
-              fontSize:      '0.55rem',
-              letterSpacing: '0.2em',
-              color:         'var(--ink-faint)',
-            }}>
-              {formatDate(post.date)}
             </span>
             <span style={{
               fontFamily:    'var(--font-mono)',
@@ -262,38 +312,19 @@ export default async function BlogPost(
               letterSpacing: '0.2em',
               color:         'var(--ink-faint)',
             }}>
-              {post.author}
+              {formatDate(post.date)}
             </span>
+            {post.author !== 'Nash+' && (
+              <span style={{
+                fontFamily:    'var(--font-mono)',
+                fontSize:      '0.55rem',
+                letterSpacing: '0.2em',
+                color:         'var(--ink-faint)',
+              }}>
+                {post.author}
+              </span>
+            )}
           </div>
-          <h1 style={{
-            fontFamily:    'var(--font-display)',
-            fontSize:      'clamp(2.25rem, 5.5vw, 4.25rem)',
-            fontWeight:    600,
-            fontStyle:     'italic',
-            color:         'var(--ink)',
-            lineHeight:    1.06,
-            letterSpacing: '-0.02em',
-            margin:        '0 0 1.5rem',
-          }}>
-            {post.title}
-          </h1>
-          <p style={{
-            fontFamily: 'var(--font-body)',
-            fontSize:   'clamp(1.05rem, 2vw, 1.25rem)',
-            fontWeight: 400,
-            fontStyle:  'italic',
-            color:      'var(--ink-muted)',
-            lineHeight: 1.65,
-            margin:     0,
-          }}>
-            {post.description}
-          </p>
-          <div style={{
-            width:           '48px',
-            height:          '3px',
-            backgroundColor: 'var(--green-600)',
-            margin:          '2rem 0 0',
-          }} />
         </div>
       </header>
 
@@ -318,26 +349,14 @@ export default async function BlogPost(
         </div>
       </article>
 
-      {/* ── Footer disclaimer ──────────────────────────────────── */}
-      <footer style={{
-        margin:     '0 var(--gutter)',
-        paddingTop: '2rem',
-        borderTop:  '1px solid var(--border-light)',
-        maxWidth:   '740px',
-      }}>
-        <p style={{
-          fontFamily:    'var(--font-mono)',
-          fontSize:      '0.5rem',
-          letterSpacing: '0.15em',
-          color:         'var(--ink-muted)',
-          lineHeight:    1.85,
-        }}>
-          NashPlus provides legal information and document automation. It is not a law firm
-          and does not provide legal advice. It is not a substitute for advice from a licensed
-          Ontario lawyer.
-        </p>
-      </footer>
+      {/* ── Footer ─────────────────────────────────────────────── */}
+      <div style={{ maxWidth: 'calc(740px + var(--gutter) * 2)', padding: '0 var(--gutter)' }}>
+        <SiteFooter style={{ padding: '2rem 0 0', borderTop: '1px solid var(--border-light)', margin: 0 }} />
+      </div>
 
+      <style>{`
+        .prose-link:hover { text-decoration-color: var(--green-600); }
+      `}</style>
     </div>
   )
 }

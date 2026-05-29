@@ -55,7 +55,7 @@ export function ContentCTA({
       <p style={{
         fontFamily: 'var(--font-body)',
         fontSize:   'clamp(0.95rem, 1.8vw, 1.05rem)',
-        fontStyle:  'italic',
+        fontStyle:  'normal',  // direct and clear, not editorial-soft
         color:      'var(--ink-muted)',
         lineHeight: 1.7,
         margin:     '0 0 1.75rem',

@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import { getAllPostMeta, formatDate, CATEGORY_LABELS } from '@/lib/blog'
 import { SIGNUP_URL as PRODUCT_URL } from '@/lib/config'
+import { SiteFooter } from '@/components/SiteFooter'
 
 const VALUE_PROPS = [
   {
     num:   '01',
     title: 'Guided forms, done right.',
-    body:  'NashPlus walks you through every field in Form 13 and Form 13.1. It knows what Ontario courts require — so you don\'t have to guess.',
+    body:  'NashPlus walks you through every field in Form 13 and Form 13.1. It knows what Ontario courts require -- so you don\'t have to guess.',
   },
   {
     num:   '02',
@@ -16,12 +17,18 @@ const VALUE_PROPS = [
   {
     num:   '03',
     title: 'Built for Ontario family court.',
-    body:  'Every form, every field, every rule is specific to Ontario. Not generic legal templates — the real thing, completed correctly.',
+    body:  'Every form, every field, every rule is specific to Ontario. Not generic legal templates -- the real thing, completed correctly.',
   },
 ]
 
+const TRUST_ANCHORS = [
+  '62 plain-language guides. Cited to Ontario statutes and court rules.',
+  'Built for self-represented litigants in Ontario family court.',
+  'Legal information. Not legal advice. Reviewed by the Nash+ team.',
+]
+
 export default function Home() {
-  const posts = getAllPostMeta().slice(0, 3)
+  const posts = getAllPostMeta().slice(0, 4)
 
   return (
     <main>
@@ -29,7 +36,7 @@ export default function Home() {
       {/* ── HERO ──────────────────────────────────────────────── */}
       <section
         style={{
-          minHeight:      'calc(100vh - 3.75rem)',
+          minHeight:      'clamp(70vh, 80vh, 85vh)',
           display:        'flex',
           flexDirection:  'column',
           justifyContent: 'center',
@@ -55,7 +62,7 @@ export default function Home() {
         />
 
         <div style={{ position: 'relative', zIndex: 1 }}>
-          {/* Eyebrow label */}
+          {/* Eyebrow */}
           <p
             className="fade-up"
             style={{
@@ -71,7 +78,7 @@ export default function Home() {
             Nash+ / Ontario Family Law
           </p>
 
-          {/* Main heading */}
+          {/* Main heading -- italic Cormorant 300, hero display moment */}
           <h1
             className="fade-up"
             style={{
@@ -125,7 +132,7 @@ export default function Home() {
               animationDelay: '420ms',
             }}
           >
-            NashPlus guides you through Form 13 and financial disclosure — step
+            NashPlus guides you through Form 13 and financial disclosure -- step
             by step, in plain language. No prior legal knowledge required.
           </p>
 
@@ -144,24 +151,45 @@ export default function Home() {
               Start with NashPlus
             </a>
             <Link href="/blog" className="btn-ghost">
-              Read our guides <span aria-hidden>→</span>
+              Browse resources <span aria-hidden>&#8594;</span>
             </Link>
+          </div>
+
+          {/* Trust anchor row */}
+          <div
+            className="fade-up"
+            style={{
+              display:        'flex',
+              flexWrap:       'wrap',
+              gap:            '0.75rem 2rem',
+              marginTop:      '3rem',
+              animationDelay: '680ms',
+            }}
+          >
+            {TRUST_ANCHORS.map((anchor, i) => (
+              <span
+                key={i}
+                style={{
+                  fontFamily:    'var(--font-mono)',
+                  fontSize:      '0.575rem',
+                  letterSpacing: '0.18em',
+                  color:         'var(--ink-muted)',
+                  lineHeight:    1.6,
+                }}
+              >
+                {anchor}
+              </span>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ── VALUE PROPS ───────────────────────────────────────── */}
-      <section
-        style={{
-          padding: `0 var(--gutter) var(--section-gap)`,
-        }}
-      >
-        <div
-          style={{
-            borderTop:  '1px solid var(--border)',
-            paddingTop: 'clamp(3rem, 6vw, 5rem)',
-          }}
-        >
+      <section style={{ padding: `0 var(--gutter) var(--section-gap)` }}>
+        <div style={{
+          borderTop:  '1px solid var(--border)',
+          paddingTop: 'clamp(3rem, 6vw, 5rem)',
+        }}>
           <p
             className="reveal"
             style={{
@@ -176,53 +204,46 @@ export default function Home() {
             How it works
           </p>
 
-          <div
-            style={{
-              display:             'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
-              gap:                 'clamp(2.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem)',
-            }}
-          >
+          <div style={{
+            display:             'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
+            gap:                 'clamp(2.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem)',
+          }}>
             {VALUE_PROPS.map((item, i) => (
               <div
                 key={i}
                 className="reveal"
                 style={{ '--reveal-delay': `${i * 120}ms` } as React.CSSProperties}
               >
-                <p
-                  style={{
-                    fontFamily:    'var(--font-mono)',
-                    fontSize:      '0.575rem',
-                    letterSpacing: '0.3em',
-                    color:         'var(--green-400)',
-                    margin:        '0 0 1.25rem',
-                  }}
-                >
+                <p style={{
+                  fontFamily:    'var(--font-mono)',
+                  fontSize:      '0.575rem',
+                  letterSpacing: '0.3em',
+                  color:         'var(--green-400)',
+                  margin:        '0 0 1.25rem',
+                }}>
                   {item.num}
                 </p>
-                <h3
-                  style={{
-                    fontFamily:    'var(--font-display)',
-                    fontSize:      'clamp(1.5rem, 2.8vw, 2rem)',
-                    fontWeight:    600,
-                    fontStyle:     'italic',
-                    color:         'var(--ink)',
-                    lineHeight:    1.15,
-                    letterSpacing: '-0.015em',
-                    margin:        '0 0 1rem',
-                  }}
-                >
+                {/* Roman Cormorant 600 for value prop titles -- informational, not display */}
+                <h3 style={{
+                  fontFamily:    'var(--font-display)',
+                  fontSize:      'clamp(1.5rem, 2.8vw, 2rem)',
+                  fontWeight:    600,
+                  fontStyle:     'normal',
+                  color:         'var(--ink)',
+                  lineHeight:    1.15,
+                  letterSpacing: '-0.015em',
+                  margin:        '0 0 1rem',
+                }}>
                   {item.title}
                 </h3>
-                <p
-                  style={{
-                    fontFamily: 'var(--font-body)',
-                    fontSize:   '0.9375rem',
-                    color:      'var(--ink-muted)',
-                    lineHeight: 1.8,
-                    margin:     0,
-                  }}
-                >
+                <p style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize:   '0.9375rem',
+                  color:      'var(--ink-muted)',
+                  lineHeight: 1.8,
+                  margin:     0,
+                }}>
                   {item.body}
                 </p>
               </div>
@@ -231,19 +252,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── RESOURCES ─────────────────────────────────────────── */}
+      {/* ── RESOURCES PREVIEW ─────────────────────────────────── */}
       {posts.length > 0 && (
-        <section
-          style={{
-            padding: `0 var(--gutter) var(--section-gap)`,
-          }}
-        >
-          <div
-            style={{
-              borderTop:  '1px solid var(--border)',
-              paddingTop: 'clamp(3rem, 6vw, 5rem)',
-            }}
-          >
+        <section style={{ padding: `0 var(--gutter) var(--section-gap)` }}>
+          <div style={{
+            borderTop:  '1px solid var(--border)',
+            paddingTop: 'clamp(3rem, 6vw, 5rem)',
+          }}>
             <div
               className="reveal"
               style={{
@@ -255,16 +270,14 @@ export default function Home() {
                 gap:            '1rem',
               }}
             >
-              <p
-                style={{
-                  fontFamily:    'var(--font-mono)',
-                  fontSize:      '0.6rem',
-                  letterSpacing: '0.36em',
-                  textTransform: 'uppercase',
-                  color:         'var(--green-600)',
-                  margin:        0,
-                }}
-              >
+              <p style={{
+                fontFamily:    'var(--font-mono)',
+                fontSize:      '0.6rem',
+                letterSpacing: '0.36em',
+                textTransform: 'uppercase',
+                color:         'var(--green-600)',
+                margin:        0,
+              }}>
                 From our resources
               </p>
               <Link
@@ -279,17 +292,15 @@ export default function Home() {
                   transition:     'color 200ms',
                 }}
               >
-                View all →
+                View all &#8594;
               </Link>
             </div>
 
-            <div
-              style={{
-                display:             'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
-                gap:                 0,
-              }}
-            >
+            <div style={{
+              display:             'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
+              gap:                 0,
+            }}>
               {posts.map((post, i) => (
                 <Link
                   key={post.slug}
@@ -306,70 +317,52 @@ export default function Home() {
                       '--reveal-delay': `${i * 100}ms`,
                     } as React.CSSProperties}
                   >
-                    <span
-                      style={{
-                        fontFamily:    'var(--font-mono)',
-                        fontSize:      '0.55rem',
-                        letterSpacing: '0.3em',
-                        textTransform: 'uppercase',
-                        color:         'var(--green-600)',
-                        display:       'block',
-                        marginBottom:  '0.75rem',
-                      }}
-                    >
+                    <span style={{
+                      fontFamily:    'var(--font-mono)',
+                      fontSize:      '0.625rem',
+                      letterSpacing: '0.28em',
+                      textTransform: 'uppercase',
+                      color:         'var(--green-700)',
+                      display:       'block',
+                      marginBottom:  '0.65rem',
+                    }}>
                       {CATEGORY_LABELS[post.category]}
                     </span>
-                    <h3
-                      style={{
-                        fontFamily:    'var(--font-display)',
-                        fontSize:      'clamp(1.3rem, 2.4vw, 1.7rem)',
-                        fontWeight:    600,
-                        color:         'var(--ink)',
-                        lineHeight:    1.2,
-                        margin:        '0 0 0.65rem',
-                        letterSpacing: '-0.01em',
-                      }}
-                    >
+                    {/* Roman title -- consistent with blog index card treatment */}
+                    <h3 style={{
+                      fontFamily:    'var(--font-display)',
+                      fontSize:      'clamp(1.3rem, 2.4vw, 1.7rem)',
+                      fontWeight:    600,
+                      fontStyle:     'normal',
+                      color:         'var(--ink)',
+                      lineHeight:    1.2,
+                      margin:        '0 0 0.65rem',
+                      letterSpacing: '-0.01em',
+                    }}>
                       {post.title}
                     </h3>
-                    <p
-                      style={{
-                        fontFamily:       'var(--font-body)',
-                        fontSize:         '0.875rem',
-                        fontStyle:        'italic',
-                        color:            'var(--ink-muted)',
-                        lineHeight:       1.65,
-                        margin:           '0 0 1.1rem',
-                        display:          '-webkit-box',
-                        WebkitLineClamp:  2,
-                        WebkitBoxOrient:  'vertical',
-                        overflow:         'hidden',
-                      } as React.CSSProperties}
-                    >
-                      {post.description}
+                    <p style={{
+                      fontFamily:       'var(--font-body)',
+                      fontSize:         '0.875rem',
+                      fontStyle:        'italic',
+                      color:            'var(--ink-muted)',
+                      lineHeight:       1.65,
+                      margin:           '0 0 1rem',
+                      display:          '-webkit-box',
+                      WebkitLineClamp:  2,
+                      WebkitBoxOrient:  'vertical',
+                      overflow:         'hidden',
+                    } as React.CSSProperties}>
+                      {post.summary || post.description}
                     </p>
-                    <div style={{ display: 'flex', gap: '1rem' }}>
-                      <span
-                        style={{
-                          fontFamily:    'var(--font-mono)',
-                          fontSize:      '0.5rem',
-                          letterSpacing: '0.2em',
-                          color:         'var(--ink-faint)',
-                        }}
-                      >
-                        {post.readingTime} min read
-                      </span>
-                      <span
-                        style={{
-                          fontFamily:    'var(--font-mono)',
-                          fontSize:      '0.5rem',
-                          letterSpacing: '0.2em',
-                          color:         'var(--ink-faint)',
-                        }}
-                      >
-                        {formatDate(post.date)}
-                      </span>
-                    </div>
+                    <span style={{
+                      fontFamily:    'var(--font-mono)',
+                      fontSize:      '0.5rem',
+                      letterSpacing: '0.18em',
+                      color:         'var(--ink-faint)',
+                    }}>
+                      {post.readingTime} min &#183; {formatDate(post.date)}
+                    </span>
                   </article>
                 </Link>
               ))}
@@ -379,96 +372,71 @@ export default function Home() {
       )}
 
       {/* ── CTA STRIP ─────────────────────────────────────────── */}
-      <section
-        style={{
-          backgroundColor: 'var(--green-600)',
-          padding:         'clamp(4rem, 8vw, 7rem) var(--gutter)',
-          position:        'relative',
-          overflow:        'hidden',
-        }}
-      >
-        {/* Decorative background arc */}
-        <div
-          aria-hidden
-          style={{
-            position:        'absolute',
-            bottom:          '-30%',
-            right:           '-10%',
-            width:           'clamp(300px, 55vw, 700px)',
-            height:          'clamp(300px, 55vw, 700px)',
-            borderRadius:    '50%',
-            border:          '1px solid rgba(255,255,255,0.08)',
-            pointerEvents:   'none',
-          }}
-        />
-        <div
-          aria-hidden
-          style={{
-            position:      'absolute',
-            bottom:        '-15%',
-            right:         '5%',
-            width:         'clamp(180px, 35vw, 440px)',
-            height:        'clamp(180px, 35vw, 440px)',
-            borderRadius:  '50%',
-            border:        '1px solid rgba(255,255,255,0.06)',
-            pointerEvents: 'none',
-          }}
-        />
+      <section style={{
+        backgroundColor: 'var(--green-600)',
+        padding:         'clamp(4rem, 8vw, 7rem) var(--gutter)',
+        position:        'relative',
+        overflow:        'hidden',
+      }}>
+        <div aria-hidden style={{
+          position:      'absolute',
+          bottom:        '-30%',
+          right:         '-10%',
+          width:         'clamp(300px, 55vw, 700px)',
+          height:        'clamp(300px, 55vw, 700px)',
+          borderRadius:  '50%',
+          border:        '1px solid rgba(255,255,255,0.08)',
+          pointerEvents: 'none',
+        }} />
+        <div aria-hidden style={{
+          position:      'absolute',
+          bottom:        '-15%',
+          right:         '5%',
+          width:         'clamp(180px, 35vw, 440px)',
+          height:        'clamp(180px, 35vw, 440px)',
+          borderRadius:  '50%',
+          border:        '1px solid rgba(255,255,255,0.06)',
+          pointerEvents: 'none',
+        }} />
 
         <div className="reveal" style={{ maxWidth: '600px', position: 'relative', zIndex: 1 }}>
-          <p
-            style={{
-              fontFamily:    'var(--font-mono)',
-              fontSize:      '0.575rem',
-              letterSpacing: '0.36em',
-              textTransform: 'uppercase',
-              color:         'rgba(255,255,255,0.45)',
-              margin:        '0 0 1.5rem',
-            }}
-          >
+          <p style={{
+            fontFamily:    'var(--font-mono)',
+            fontSize:      '0.575rem',
+            letterSpacing: '0.36em',
+            textTransform: 'uppercase',
+            color:         'rgba(255,255,255,0.45)',
+            margin:        '0 0 1.5rem',
+          }}>
             Nash+ / Get started
           </p>
-          <h2
-            style={{
-              fontFamily:    'var(--font-display)',
-              fontSize:      'clamp(2.25rem, 5vw, 4rem)',
-              fontWeight:    300,
-              fontStyle:     'italic',
-              color:         'var(--canvas)',
-              lineHeight:    1.1,
-              letterSpacing: '-0.015em',
-              margin:        '0 0 1.5rem',
-            }}
-          >
-            You don't have to navigate
+          <h2 style={{
+            fontFamily:    'var(--font-display)',
+            fontSize:      'clamp(2.25rem, 5vw, 4rem)',
+            fontWeight:    300,
+            fontStyle:     'italic',
+            color:         'var(--canvas)',
+            lineHeight:    1.1,
+            letterSpacing: '-0.015em',
+            margin:        '0 0 1.5rem',
+          }}>
+            You don&#8217;t have to navigate
             this alone.
           </h2>
-          <p
-            style={{
-              fontFamily: 'var(--font-body)',
-              fontSize:   'clamp(0.95rem, 1.8vw, 1.1rem)',
-              color:      'rgba(255,255,255,0.7)',
-              lineHeight: 1.75,
-              margin:     '0 0 2.75rem',
-            }}
-          >
+          <p style={{
+            fontFamily: 'var(--font-body)',
+            fontSize:   'clamp(0.95rem, 1.8vw, 1.1rem)',
+            color:      'rgba(255,255,255,0.7)',
+            lineHeight: 1.75,
+            margin:     '0 0 2.75rem',
+          }}>
             NashPlus walks you through Form 13 and financial disclosure, step by
             step, with clear guidance at every field.
           </p>
           <a
             href={PRODUCT_URL}
-            style={{
-              display:         'inline-block',
-              fontFamily:      'var(--font-mono)',
-              fontSize:        '0.65rem',
-              letterSpacing:   '0.26em',
-              textTransform:   'uppercase',
-              color:           'var(--green-600)',
-              backgroundColor: 'var(--canvas)',
-              padding:         '0.9rem 2.25rem',
-              textDecoration:  'none',
-              transition:      'background-color 220ms, transform 220ms',
-            }}
+            className="btn-primary"
+            style={{ backgroundColor: 'var(--canvas)', color: 'var(--green-700)' }}
           >
             Start with NashPlus
           </a>
@@ -476,45 +444,7 @@ export default function Home() {
       </section>
 
       {/* ── FOOTER ────────────────────────────────────────────── */}
-      <footer
-        style={{
-          padding:         'clamp(3rem, 6vw, 4.5rem) var(--gutter)',
-          borderTop:       '1px solid var(--border-light)',
-          display:         'flex',
-          justifyContent:  'space-between',
-          alignItems:      'flex-start',
-          flexWrap:        'wrap',
-          gap:             '2rem',
-        }}
-      >
-        <p
-          style={{
-            fontFamily:    'var(--font-mono)',
-            fontSize:      '0.5rem',
-            letterSpacing: '0.15em',
-            color:         'var(--ink-muted)',
-            lineHeight:    1.85,
-            maxWidth:      '600px',
-            margin:        0,
-          }}
-        >
-          NashPlus provides legal information and document automation. It is not a law
-          firm and does not provide legal advice. It is not a substitute for advice
-          from a licensed Ontario lawyer.
-        </p>
-        <p
-          style={{
-            fontFamily:    'var(--font-mono)',
-            fontSize:      '0.5rem',
-            letterSpacing: '0.15em',
-            color:         'var(--ink-faint)',
-            margin:        0,
-            flexShrink:    0,
-          }}
-        >
-          2025 NashPlus
-        </p>
-      </footer>
+      <SiteFooter />
 
     </main>
   )
