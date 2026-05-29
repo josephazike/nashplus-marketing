@@ -32,6 +32,15 @@
   /* ── Spacing ──────────────────────────────────── */
   --gutter:        clamp(1.5rem, 6vw, 5rem);
   --section-gap:   clamp(5rem, 10vw, 9rem);
+  --space-1:       0.25rem;
+  --space-2:       0.5rem;
+  --space-3:       0.75rem;
+  --space-4:       1rem;
+  --space-6:       1.5rem;
+  --space-8:       2rem;
+  --space-12:      3rem;
+  --space-16:      4rem;
+  --space-24:      6rem;
 
   /* ── Eases ────────────────────────────────────── */
   --ease-expo:     cubic-bezier(0.16, 1, 0.3, 1);
@@ -131,16 +140,18 @@ body::after {
 }
 
 /* ── Primary button ───────────────────────────────────── */
+/* White text on green-600: contrast 7.5:1 (WCAG AAA). Decision 1 approved. */
 .btn-primary {
   display: inline-block;
   background-color: var(--green-600);
-  color: var(--canvas);
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   letter-spacing: 0.26em;
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.9rem 2.25rem;
+  min-height: 44px;
   transition:
     background-color 220ms var(--ease-smooth),
     transform        220ms var(--ease-smooth);

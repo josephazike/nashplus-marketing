@@ -20,9 +20,9 @@ export function DecisionTree({ question, branches, note }: DecisionTreeProps) {
       aria-label={`Decision guide: ${question}`}
       style={{ margin: '2rem 0' }}
     >
-      {/* Root question */}
+      {/* Root question -- green-700 background: canvas text on green-700 = 5.66:1 (PASS AA) */}
       <div style={{
-        background:    'var(--green-600)',
+        background:    'var(--green-700)',
         color:         'var(--canvas)',
         borderRadius:  '2px',
         padding:       'clamp(0.85rem, 2.5vw, 1.1rem) clamp(1rem, 3vw, 1.5rem)',

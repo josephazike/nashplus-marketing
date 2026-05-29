@@ -45,3 +45,6 @@ next-env.d.ts
 
 # manual worktrees
 .worktrees/
+
+# local skill installations (npx skills add / superpowers)
+.agents/

@@ -79,7 +79,7 @@ export function ProcessTimeline({ steps, heading }: ProcessTimelineProps) {
                   fontFamily:    'var(--font-display)',
                   fontSize:      'clamp(1.05rem, 2vw, 1.2rem)',
                   fontWeight:    600,
-                  fontStyle:     'italic',
+                  fontStyle:     'normal',  // roman -- consistent with H2/H3 body roman treatment
                   color:         'var(--ink)',
                   margin:        '0 0 0.5rem',
                   lineHeight:    1.3,

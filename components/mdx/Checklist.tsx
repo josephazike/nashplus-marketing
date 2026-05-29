@@ -46,7 +46,7 @@ export function Checklist({ items, heading }: ChecklistProps) {
               borderBottom:  i < items.length - 1 ? '1px solid rgba(45, 90, 61, 0.12)' : 'none',
             }}
           >
-            {/* Static decorative checkbox */}
+            {/* Outline-only checkbox -- signals instructional intent, not completed state */}
             <svg
               width="18"
               height="18"
@@ -55,8 +55,7 @@ export function Checklist({ items, heading }: ChecklistProps) {
               aria-hidden="true"
               style={{ flexShrink: 0, marginTop: '2px' }}
             >
-              <rect x="1" y="1" width="16" height="16" rx="3" stroke="var(--green-600)" strokeWidth="1.5" />
-              <path d="M4.5 9l3 3 6-6" stroke="var(--green-600)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+              <rect x="1" y="1" width="16" height="16" rx="3" stroke="var(--green-700)" strokeWidth="1.5" />
             </svg>
 
             <span style={{

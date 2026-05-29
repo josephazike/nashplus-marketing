@@ -98,8 +98,8 @@ export function Callout({ type = 'note', title, children }: CalloutProps) {
       role="note"
       style={{
         ...STYLES[type],
-        borderRadius: '2px',
-        padding:      'clamp(1rem, 3vw, 1.25rem) clamp(1rem, 3vw, 1.5rem)',
+        borderRadius: 0,
+        padding:      'clamp(1.25rem, 3vw, 1.5rem) clamp(1rem, 3vw, 1.5rem)',
         margin:       '2rem 0',
       }}
     >
@@ -108,7 +108,7 @@ export function Callout({ type = 'note', title, children }: CalloutProps) {
         <div style={{ minWidth: 0 }}>
           <p style={{
             fontFamily:    'var(--font-mono)',
-            fontSize:      '0.58rem',
+            fontSize:      '0.625rem',
             letterSpacing: '0.22em',
             textTransform: 'uppercase',
             color:         'inherit',

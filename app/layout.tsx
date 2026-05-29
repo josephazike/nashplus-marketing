@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Lora, Geist_Mono } from "next/font/google";
 import { RevealObserver } from "@/components/RevealObserver";
-import { SIGNUP_URL } from "@/lib/config";
+import { NavMenu }       from "@/components/NavMenu";
 import "./globals.css";
+
+function safeJsonLd(obj: unknown): string {
+  return JSON.stringify(obj)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+}
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-display",
@@ -87,44 +94,13 @@ export default function RootLayout({
           >
             Nash+
           </a>
-          <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-            <a
-              href="/blog"
-              style={{
-                fontFamily:     "var(--font-mono)",
-                fontSize:       "0.6rem",
-                letterSpacing:  "0.3em",
-                textTransform:  "uppercase",
-                color:          "var(--ink-muted)",
-                textDecoration: "none",
-                transition:     "color 200ms",
-              }}
-            >
-              Resources
-            </a>
-            <a
-              href={SIGNUP_URL}
-              style={{
-                fontFamily:      "var(--font-mono)",
-                fontSize:        "0.6rem",
-                letterSpacing:   "0.26em",
-                textTransform:   "uppercase",
-                color:           "var(--canvas)",
-                backgroundColor: "var(--green-600)",
-                textDecoration:  "none",
-                padding:         "0.5rem 1.1rem",
-                transition:      "background-color 200ms",
-              }}
-            >
-              Get started
-            </a>
-          </div>
+          <NavMenu />
         </nav>
         <RevealObserver />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: safeJsonLd({
               '@context': 'https://schema.org',
               '@type':    'Organization',
               name:        'NashPlus',
