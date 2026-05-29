@@ -42,3 +42,6 @@ next-env.d.ts
 
 # claude worktrees (linked worktrees registered in .git/worktrees -- not content)
 .claude/worktrees/
+
+# manual worktrees
+.worktrees/
