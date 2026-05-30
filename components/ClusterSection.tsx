@@ -1,181 +1,93 @@
-'use client'
-
-import { useState } from 'react'
-import Link from 'next/link'
+import Link          from 'next/link'
 import type { PostMeta, Cluster } from '@/lib/blog-display'
-import { CATEGORY_LABELS, CLUSTER_LABELS, formatDate } from '@/lib/blog-display'
-
-const COLLAPSED_COUNT = 3
+import { CLUSTER_LABELS }         from '@/lib/blog-display'
+import { ArticleCard }            from '@/components/ArticleCard'
 
 interface ClusterSectionProps {
-  cluster:         Cluster
-  posts:           PostMeta[]
-  defaultExpanded: boolean
+  cluster: Cluster
+  posts:   PostMeta[]
 }
 
-export function ClusterSection({ cluster, posts, defaultExpanded }: ClusterSectionProps) {
-  const [expanded, setExpanded] = useState(defaultExpanded)
-
-  const visible   = expanded ? posts : posts.slice(0, COLLAPSED_COUNT)
-  const remaining = posts.length - COLLAPSED_COUNT
+export function ClusterSection({ cluster, posts }: ClusterSectionProps) {
+  if (posts.length === 0) return null
 
   return (
-    <section
-      id={`cluster-${cluster}`}
-      style={{ padding: '0 var(--gutter)', marginBottom: 'clamp(2.5rem, 5vw, 4rem)' }}
-    >
-      {/* Cluster header — Fraunces display, --ink, fontOpticalSizing auto */}
-      <div style={{
-        borderTop:    '1px solid var(--border)',
-        paddingTop:   'clamp(1.75rem, 3.5vw, 2.75rem)',
-        marginBottom: 'clamp(1.25rem, 2.5vw, 2rem)',
-        display:      'flex',
-        alignItems:   'baseline',
-        gap:          '1rem',
-        flexWrap:     'wrap',
-      }}>
-        <h2 style={{
-          fontFamily:        'var(--font-display)',
-          fontSize:          'var(--text-cluster)',
-          fontWeight:        600,
-          fontStyle:         'normal',
-          fontOpticalSizing: 'auto',
-          color:             'var(--ink)',
-          margin:            0,
-          letterSpacing:     '-0.02em',
-          lineHeight:        'var(--lh-heading)',
-        } as React.CSSProperties}>
-          {CLUSTER_LABELS[cluster]}
-        </h2>
-        <span style={{
-          fontFamily:    'var(--font-mono)',
-          fontSize:      'var(--text-meta)',
-          letterSpacing: '0.15em',
-          color:         'var(--ink-secondary)',
-        }}>
-          {posts.length} {posts.length === 1 ? 'article' : 'articles'}
-        </span>
+    <section id={`cluster-${cluster}`} className="cluster-section">
+
+      {/* ── Section header ─────────────────────────────────────── */}
+      <div className="cluster-header">
+        <div className="cluster-header-inner">
+          <h2 className="cluster-title">{CLUSTER_LABELS[cluster]}</h2>
+          <span className="cluster-count">
+            {posts.length} {posts.length === 1 ? 'guide' : 'guides'}
+          </span>
+        </div>
       </div>
 
-      {/* Article grid — responsive columns */}
+      {/* ── Image card grid — flat, no accordion ───────────────── */}
       <div className="cluster-grid">
-        {visible.map((post) => (
-          <ArticleCard key={post.slug} post={post} />
+        {posts.map((post, i) => (
+          <ArticleCard
+            key={post.slug}
+            post={post}
+            priority={i < 3}
+            sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
+          />
         ))}
       </div>
 
-      {/* Expand / collapse */}
-      {posts.length > COLLAPSED_COUNT && (
-        <div style={{ marginTop: '1.25rem' }}>
-          <button
-            onClick={() => setExpanded(v => !v)}
-            className="btn-ghost"
-            style={{
-              background:   'none',
-              border:       'none',
-              cursor:       'pointer',
-              padding:      0,
-              minHeight:    '44px',
-            }}
-          >
-            {expanded
-              ? `Show fewer`
-              : `Show all ${posts.length} in ${CLUSTER_LABELS[cluster]} (${remaining} more) →`
-            }
-          </button>
-        </div>
-      )}
-
       <style>{`
-        .cluster-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
+        .cluster-section {
+          padding:       0 var(--gutter);
+          margin-bottom: clamp(3rem, 6vw, 5rem);
         }
-        @media (max-width: 1023px) {
+
+        /* ── Header ───────────────────────────────────── */
+        .cluster-header {
+          border-top:    2px solid var(--border);
+          padding-top:   clamp(1.5rem, 3vw, 2.5rem);
+          margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+        }
+        .cluster-header-inner {
+          display:     flex;
+          align-items: baseline;
+          gap:         0.875rem;
+          flex-wrap:   wrap;
+        }
+        .cluster-title {
+          font-family:    var(--font-display);
+          font-size:      clamp(1.375rem, 2.75vw, 1.875rem);
+          font-weight:    700;
+          font-style:     normal;
+          font-optical-sizing: auto;
+          color:          var(--ink);
+          margin:         0;
+          letter-spacing: -0.02em;
+          line-height:    1.1;
+        }
+        .cluster-count {
+          font-family:    var(--font-mono);
+          font-size:      0.625rem;
+          letter-spacing: 0.18em;
+          color:          var(--ink-secondary);
+          text-transform: uppercase;
+        }
+
+        /* ── Card grid ────────────────────────────────── */
+        .cluster-grid {
+          display:               grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap:                   1.5rem;
+          align-items:           start;
+        }
+
+        @media (max-width: 1199px) {
           .cluster-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 639px) {
           .cluster-grid { grid-template-columns: 1fr; }
         }
-        .article-card {
-          transition: box-shadow 200ms ease, transform 200ms ease;
-        }
-        .article-card:hover {
-          box-shadow: 0 4px 16px rgba(28, 28, 25, 0.08);
-          transform:  translateY(-2px);
-        }
       `}</style>
     </section>
-  )
-}
-
-function ArticleCard({ post }: { post: PostMeta }) {
-  return (
-    <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
-      <article
-        className="article-card"
-        style={{
-          padding:      'clamp(1.25rem, 2.5vw, 1.75rem)',
-          paddingLeft:  0,
-          paddingRight: 'clamp(0.75rem, 2.5vw, 2rem)',
-          borderBottom: '1px solid var(--border-light)',
-          cursor:       'pointer',
-        }}
-      >
-        {/* Category tag — Geist Mono, --green-700 (9:1 on #fafaf8, AAA) */}
-        <span style={{
-          fontFamily:    'var(--font-mono)',
-          fontSize:      'var(--text-meta)',
-          letterSpacing: '0.24em',
-          textTransform: 'uppercase',
-          color:         'var(--green-700)',
-          display:       'block',
-          marginBottom:  '0.5rem',
-        }}>
-          {CATEGORY_LABELS[post.category]}
-        </span>
-
-        {/* Card title — Fraunces 600 roman, opsz auto */}
-        <h3 style={{
-          fontFamily:        'var(--font-display)',
-          fontSize:          'var(--text-h2)',
-          fontWeight:        600,
-          fontStyle:         'normal',
-          fontOpticalSizing: 'auto',
-          color:             'var(--ink)',
-          lineHeight:        'var(--lh-heading)',
-          margin:            '0 0 0.5rem',
-          letterSpacing:     '-0.02em',
-        } as React.CSSProperties}>
-          {post.title}
-        </h3>
-
-        {/* Description — Inter 400, 2-line clamp, --ink-secondary (5.88:1 on #fafaf8) */}
-        <p style={{
-          fontFamily:       'var(--font-body)',
-          fontSize:         '0.9375rem',
-          fontStyle:        'normal',
-          color:            'var(--ink-secondary)',
-          lineHeight:       'var(--lh-body)',
-          margin:           '0 0 0.75rem',
-          display:          '-webkit-box',
-          WebkitLineClamp:  2,
-          WebkitBoxOrient:  'vertical',
-          overflow:         'hidden',
-        } as React.CSSProperties}>
-          {post.summary || post.description}
-        </p>
-
-        {/* Metadata */}
-        <span style={{
-          fontFamily:    'var(--font-mono)',
-          fontSize:      'var(--text-meta)',
-          letterSpacing: '0.14em',
-          color:         'var(--ink-faint)',
-        }}>
-          {post.readingTime} min &middot; {formatDate(post.date)}
-        </span>
-      </article>
-    </Link>
   )
 }
