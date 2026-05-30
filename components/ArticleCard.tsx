@@ -5,13 +5,14 @@ import { CATEGORY_LABELS, formatDate } from '@/lib/blog-display'
 import { getPostImage }        from '@/lib/images'
 
 interface ArticleCardProps {
-  post:   PostMeta
-  sizes?: string
+  post:     PostMeta
+  index:    number   // position within the cluster grid — drives unique image selection
+  sizes?:   string
   priority?: boolean
 }
 
-export function ArticleCard({ post, sizes, priority = false }: ArticleCardProps) {
-  const image   = getPostImage(post.slug, post.cluster)
+export function ArticleCard({ post, index, sizes, priority = false }: ArticleCardProps) {
+  const image   = getPostImage(post.slug, post.cluster, index)
   const excerpt = post.summary || post.description
 
   return (
