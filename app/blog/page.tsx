@@ -4,15 +4,11 @@ import type { Cluster } from '@/lib/blog'
 import { ClusterSection } from '@/components/ClusterSection'
 import { SiteFooter }     from '@/components/SiteFooter'
 
-// Decision 2: #fafaf8 reading surface (--ink contrast: 14.7:1 AAA).
-// Documentation Hub treatment (Variant A): cluster grid signals "reference library."
-// Skill basis: UI/UX Pro Max v5 "FAQ/Documentation Landing" pattern.
-
 export const metadata: Metadata = {
-  title:       'Resources — NashPlus',
+  title:       'Guides — NashPlus',
   description: 'Plain-language guides to Ontario family law: Form 13, equalization, financial disclosure, and navigating family court as a self-represented litigant.',
   openGraph: {
-    title:       'Resources — NashPlus',
+    title:       'Guides — NashPlus',
     description: 'Plain-language guides to Ontario family law.',
     url:         'https://nashplus.dev/blog',
     siteName:    'NashPlus',
@@ -20,7 +16,17 @@ export const metadata: Metadata = {
   },
 }
 
-const DEFAULT_EXPANDED: Cluster = 'self-representation'
+// Human-readable cluster labels for the filter nav
+const CLUSTER_NAV_LABELS: Record<Cluster, string> = {
+  'self-representation': 'Representing Yourself',
+  'support':             'Support & Legal Aid',
+  'parenting':           'Parenting',
+  'forms':               'Forms',
+  'concepts':            'Law Explained',
+  'procedure-and-fears': 'Court Process',
+  'tools':               'Tools & Apps',
+  'glossary':            'Glossary',
+}
 
 export default function BlogIndex() {
   const posts          = getAllPostMeta()
@@ -31,109 +37,121 @@ export default function BlogIndex() {
     <div style={{ minHeight: '100vh', backgroundColor: '#fafaf8', paddingBottom: '4rem' }}>
 
       {/* ── Page header ──────────────────────────────────────── */}
-      <header style={{ padding: 'clamp(4rem, 10vw, 8rem) var(--gutter) 0' }}>
-        <p style={{
-          fontFamily:    'var(--font-mono)',
-          fontSize:      'var(--text-meta)',
-          letterSpacing: '0.36em',
-          textTransform: 'uppercase',
-          color:         'var(--green-600)',
-          margin:        '0 0 1.25rem',
-        }}>
-          Nash+ / Resources
-        </p>
-        <h1 style={{
-          fontFamily:        'var(--font-display)',
-          fontSize:          'var(--text-display)',
-          fontWeight:        700,
-          fontStyle:         'normal',
-          fontOpticalSizing: 'auto',
-          letterSpacing:     '-0.03em',
-          color:             'var(--ink)',
-          lineHeight:        'var(--lh-tight)',
-          margin:            0,
-        } as React.CSSProperties}>
-          Law, Explained.
-        </h1>
-        <div style={{
-          width:           '48px',
-          height:          '3px',
-          backgroundColor: 'var(--green-600)',
-          margin:          '1.75rem 0',
-        }} />
-        <p style={{
-          fontFamily: 'var(--font-body)',
-          fontSize:   'var(--text-lead)',
-          fontWeight: 400,
-          color:      'var(--ink-secondary)',
-          maxWidth:   '52ch',
-          lineHeight: 'var(--lh-body)',
-          margin:     0,
-        }}>
-          Plain-language guides to Ontario family law. Form 13, equalization,
-          financial disclosure, and what self-represented litigants need to know.
-          Every article cited.
+      <header className="blog-header">
+        <p className="blog-eyebrow">Nash+ &middot; Guides</p>
+        <h1 className="blog-title">62 plain-language guides.</h1>
+        <p className="blog-lead">
+          Ontario family law explained clearly — Form 13, financial disclosure,
+          equalization, and what self-represented litigants need to know. Every
+          article cited.
         </p>
 
-        {/* Cluster navigation pills */}
+        {/* ── Cluster filter nav ──────────────────────────── */}
         {activeClusters.length > 1 && (
           <nav
             aria-label="Browse by topic"
-            style={{
-              display:   'flex',
-              flexWrap:  'wrap',
-              gap:       '0.5rem',
-              marginTop: '2rem',
-            }}
+            className="cluster-filter-nav"
           >
             {activeClusters.map(cluster => (
               <a
                 key={cluster}
                 href={`#cluster-${cluster}`}
-                style={{
-                  fontFamily:     'var(--font-mono)',
-                  fontSize:       'var(--text-meta)',
-                  letterSpacing:  '0.2em',
-                  textTransform:  'uppercase',
-                  color:          'var(--ink)',
-                  textDecoration: 'none',
-                  border:         '1px solid var(--border)',
-                  borderRadius:   '2px',
-                  padding:        '0.4rem 0.85rem',
-                  transition:     'background 180ms, border-color 180ms',
-                  minHeight:      '36px',
-                  display:        'inline-flex',
-                  alignItems:     'center',
-                  backgroundColor: 'transparent',
-                }}
-                className="cluster-pill"
+                className="cluster-filter-pill"
               >
-                {CLUSTER_LABELS[cluster]}
+                {CLUSTER_NAV_LABELS[cluster]}
+                <span className="cluster-filter-count">
+                  {byCluster.get(cluster)?.length ?? 0}
+                </span>
               </a>
             ))}
           </nav>
         )}
       </header>
 
-      {/* ── Cluster sections ─────────────────────────────────── */}
+      {/* ── Cluster image-card sections ──────────────────────── */}
       <div style={{ marginTop: 'clamp(3rem, 6vw, 5rem)' }}>
         {activeClusters.map(cluster => (
           <ClusterSection
             key={cluster}
             cluster={cluster}
             posts={byCluster.get(cluster) ?? []}
-            defaultExpanded={cluster === DEFAULT_EXPANDED}
           />
         ))}
       </div>
 
-      {/* ── Footer ───────────────────────────────────────────── */}
       <SiteFooter style={{ margin: '0', marginTop: 'clamp(2rem, 4vw, 3rem)' }} />
 
       <style>{`
-        .cluster-pill:hover {
-          background:    var(--surface);
-          border-color:  var(--ink-secondary);
+        /* ── Blog header ─────────────────────────────────── */
+        .blog-header {
+          padding:    clamp(4rem, 10vw, 7rem) var(--gutter) 0;
+          background: #fafaf8;
+        }
+        .blog-eyebrow {
+          font-family:    var(--font-mono);
+          font-size:      var(--text-meta);
+          letter-spacing: 0.34em;
+          text-transform: uppercase;
+          color:          var(--green-600);
+          margin:         0 0 1rem;
+        }
+        .blog-title {
+          font-family:    var(--font-display);
+          font-size:      var(--text-display);
+          font-weight:    700;
+          font-style:     normal;
+          font-optical-sizing: auto;
+          letter-spacing: -0.03em;
+          color:          var(--ink);
+          line-height:    1.05;
+          margin:         0 0 1.25rem;
+        }
+        .blog-lead {
+          font-family: var(--font-body);
+          font-size:   var(--text-lead);
+          color:       var(--ink-secondary);
+          max-width:   52ch;
+          line-height: var(--lh-body);
+          margin:      0;
+        }
+
+        /* ── Cluster filter pills ────────────────────────── */
+        .cluster-filter-nav {
+          display:    flex;
+          flex-wrap:  wrap;
+          gap:        0.5rem;
+          margin-top: 2.25rem;
+          padding-bottom: clamp(2rem, 4vw, 3rem);
+          border-bottom: 1px solid var(--border);
+        }
+        .cluster-filter-pill {
+          font-family:     var(--font-body);
+          font-size:       0.875rem;
+          font-weight:     500;
+          color:           var(--ink);
+          text-decoration: none;
+          border:          1.5px solid var(--border);
+          border-radius:   100px;
+          padding:         0.4rem 0.875rem;
+          display:         inline-flex;
+          align-items:     center;
+          gap:             0.5rem;
+          transition:      background 160ms, border-color 160ms, color 160ms;
+          min-height:      36px;
+        }
+        .cluster-filter-pill:hover {
+          background:    var(--green-50);
+          border-color:  var(--green-400);
+          color:         var(--green-700);
+        }
+        .cluster-filter-count {
+          font-family:    var(--font-mono);
+          font-size:      0.5625rem;
+          letter-spacing: 0.1em;
+          color:          var(--ink-faint);
+          background:     rgba(28,28,25,0.06);
+          border-radius:  100px;
+          padding:        0.15rem 0.45rem;
         }
       `}</style>
     </div>

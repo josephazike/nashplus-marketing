@@ -43,21 +43,24 @@
   --border:        rgba(28, 28, 25, 0.14);
   --border-light:  rgba(28, 28, 25, 0.08);
 
-  /* ── Type scale — Major Third 1.250 ratio ─────── */
-  /* Skill basis: UX guideline "Font Size Scale" — consistent modular scale */
-  --text-hero:     clamp(3rem, 7.5vw, 5.5rem);   /* 48–88px  Fraunces 800 */
-  --text-display:  clamp(2.25rem, 5vw, 3.5rem);  /* 36–56px  Fraunces 700 */
-  --text-title:    clamp(1.875rem, 4vw, 2.75rem); /* 30–44px  Fraunces 600 */
-  --text-cluster:  clamp(1.5rem, 3vw, 2rem);     /* 24–32px  Fraunces 600 */
-  --text-h2:       clamp(1.3rem, 2.5vw, 1.625rem); /* 21–26px Fraunces 600 */
-  --text-h3:       clamp(1.0625rem, 2vw, 1.25rem); /* 17–20px Inter 600   */
-  --text-body:     1.0625rem;                     /* 17px     Inter 400    */
-  --text-lead:     1.1875rem;                     /* 19px     Inter 400    */
-  --text-meta:     0.6875rem;                     /* 11px     Geist Mono   */
-  --text-label:    0.625rem;                      /* 10px     Geist Mono   */
+  /* ── Type scale ──────────────────────────────────
+     Image-forward redesign: generous body (18px) for effortless reading.
+     Skill basis: frontend-design — "generous body size, 1.6–1.7 line-height,
+     65–75ch measure, AAA body contrast on #fafaf8."
+  ─────────────────────────────────────────────── */
+  --text-hero:     clamp(3rem, 7.5vw, 5.5rem);     /* 48–88px  Fraunces 800 */
+  --text-display:  clamp(2.25rem, 5vw, 3.5rem);    /* 36–56px  Fraunces 700 */
+  --text-title:    clamp(1.875rem, 4vw, 2.75rem);  /* 30–44px  Fraunces 600 */
+  --text-cluster:  clamp(1.5rem, 3vw, 2rem);       /* 24–32px  Fraunces 600 */
+  --text-h2:       clamp(1.3rem, 2.5vw, 1.625rem); /* 21–26px  Fraunces 600 */
+  --text-h3:       clamp(1.0625rem, 2vw, 1.25rem); /* 17–20px  Inter 600    */
+  --text-body:     1.125rem;                        /* 18px     Inter 400  ← bumped from 17px */
+  --text-lead:     1.1875rem;                       /* 19px     Inter 400    */
+  --text-meta:     0.6875rem;                       /* 11px     Geist Mono   */
+  --text-label:    0.625rem;                        /* 10px     Geist Mono   */
 
   /* ── Line heights ─────────────────────────────── */
-  /* Skill basis: UX guideline "Line Height" — 1.5–1.75 for body */
+  /* 1.65 body = mid-range of 1.6–1.7 skill target. AAA on #fafaf8 (--ink 14.7:1). */
   --lh-body:       1.65;
   --lh-lead:       1.65;
   --lh-heading:    1.15;
