@@ -30,6 +30,7 @@ export function ClusterSection({ cluster, posts }: ClusterSectionProps) {
           <ArticleCard
             key={post.slug}
             post={post}
+            index={i}
             priority={i < 3}
             sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
           />
