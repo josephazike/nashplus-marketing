@@ -146,12 +146,12 @@ export default function BlogIndex() {
         }
         .cluster-filter-count {
           font-family:    var(--font-mono);
-          font-size:      0.5625rem;
-          letter-spacing: 0.1em;
-          color:          var(--ink-faint);
-          background:     rgba(28,28,25,0.06);
+          font-size:      0.75rem;
+          letter-spacing: 0.06em;
+          color:          var(--ink-secondary);
+          background:     rgba(28,28,25,0.07);
           border-radius:  100px;
-          padding:        0.15rem 0.45rem;
+          padding:        0.15rem 0.5rem;
         }
       `}</style>
     </div>

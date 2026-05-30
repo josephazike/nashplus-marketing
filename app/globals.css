@@ -54,10 +54,10 @@
   --text-cluster:  clamp(1.5rem, 3vw, 2rem);       /* 24–32px  Fraunces 600 */
   --text-h2:       clamp(1.3rem, 2.5vw, 1.625rem); /* 21–26px  Fraunces 600 */
   --text-h3:       clamp(1.0625rem, 2vw, 1.25rem); /* 17–20px  Inter 600    */
-  --text-body:     1.125rem;                        /* 18px     Inter 400  ← bumped from 17px */
+  --text-body:     1.125rem;                        /* 18px     Inter 400    */
   --text-lead:     1.1875rem;                       /* 19px     Inter 400    */
-  --text-meta:     0.6875rem;                       /* 11px     Geist Mono   */
-  --text-label:    0.625rem;                        /* 10px     Geist Mono   */
+  --text-meta:     0.75rem;                         /* 12px     Geist Mono ← was 11px */
+  --text-label:    0.875rem;                        /* 14px     Geist Mono ← was 10px; meets AA minimum for functional labels */
 
   /* ── Line heights ─────────────────────────────── */
   /* 1.65 body = mid-range of 1.6–1.7 skill target. AAA on #fafaf8 (--ink 14.7:1). */

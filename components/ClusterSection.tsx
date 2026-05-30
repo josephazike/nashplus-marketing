@@ -68,8 +68,8 @@ export function ClusterSection({ cluster, posts }: ClusterSectionProps) {
         }
         .cluster-count {
           font-family:    var(--font-mono);
-          font-size:      0.625rem;
-          letter-spacing: 0.18em;
+          font-size:      0.75rem;
+          letter-spacing: 0.12em;
           color:          var(--ink-secondary);
           text-transform: uppercase;
         }
