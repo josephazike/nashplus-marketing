@@ -134,7 +134,7 @@ export function NavMenu() {
         /* ── Desktop nav links ─────────────────────────── */
         .nav-link {
           font-family:    var(--font-body);
-          font-size:      0.9375rem;
+          font-size:      1rem;
           font-weight:    500;
           color:          var(--ink);
           text-decoration: none;
@@ -153,7 +153,7 @@ export function NavMenu() {
         /* ── Desktop CTA ───────────────────────────────── */
         .nav-cta {
           font-family:     var(--font-body);
-          font-size:       0.9375rem;
+          font-size:       1rem;
           font-weight:     600;
           color:           #ffffff;
           background:      var(--green-600);
@@ -237,10 +237,10 @@ export function NavMenu() {
         }
         .mobile-divider-label {
           font-family:    var(--font-mono);
-          font-size:      0.625rem;
-          letter-spacing: 0.28em;
+          font-size:      0.75rem;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
-          color:          var(--ink-faint);
+          color:          var(--ink-secondary);
         }
         .mobile-cluster-link {
           font-family:    var(--font-body);

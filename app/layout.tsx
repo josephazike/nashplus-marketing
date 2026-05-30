@@ -85,13 +85,13 @@ export default function RootLayout({
           <a
             href="/"
             style={{
-              fontFamily:     "var(--font-display)",
-              fontSize:       "1.2rem",
-              fontWeight:     700,
-              letterSpacing:  "-0.02em",
-              color:          "var(--green-600)",
-              textDecoration: "none",
-              lineHeight:     1,
+              fontFamily:        "var(--font-display)",
+              fontSize:          "clamp(1.75rem, 2.5vw, 2.25rem)",
+              fontWeight:        800,
+              letterSpacing:     "-0.03em",
+              color:             "var(--green-600)",
+              textDecoration:    "none",
+              lineHeight:        1,
               fontOpticalSizing: "auto",
             } as React.CSSProperties}
           >

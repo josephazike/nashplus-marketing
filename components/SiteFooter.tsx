@@ -22,12 +22,11 @@ export function SiteFooter({ style }: SiteFooterProps) {
       <div style={{ maxWidth: '600px' }}>
         <LegalDisclaimer />
         <p style={{
-          fontFamily:    'var(--font-mono)',
-          fontSize:      '0.5rem',
-          letterSpacing: '0.15em',
-          color:         'var(--ink-muted)',
-          lineHeight:    1.85,
-          margin:        '0.75rem 0 0',
+          fontFamily:    'var(--font-body)',
+          fontSize:      '0.9375rem',
+          color:         'var(--ink-secondary)',
+          lineHeight:    1.6,
+          margin:        '0.625rem 0 0',
         }}>
           Information, not legal advice. Consult a licensed Ontario lawyer.
         </p>
@@ -36,27 +35,26 @@ export function SiteFooter({ style }: SiteFooterProps) {
         display:       'flex',
         flexDirection: 'column',
         alignItems:    'flex-end',
-        gap:           '0.75rem',
+        gap:           '0.625rem',
         flexShrink:    0,
       }}>
         <Link
           href="/blog"
           style={{
-            fontFamily:     'var(--font-mono)',
-            fontSize:       '0.5rem',
-            letterSpacing:  '0.2em',
-            textTransform:  'uppercase',
-            color:          'var(--ink-muted)',
+            fontFamily:     'var(--font-body)',
+            fontSize:       '0.9375rem',
+            fontWeight:     500,
+            color:          'var(--green-700)',
             textDecoration: 'none',
             transition:     'color 200ms',
           }}
         >
-          All resources →
+          All guides &rarr;
         </Link>
         <p style={{
           fontFamily:    'var(--font-mono)',
-          fontSize:      '0.5rem',
-          letterSpacing: '0.15em',
+          fontSize:      '0.8125rem',
+          letterSpacing: '0.06em',
           color:         'var(--ink-faint)',
           margin:        0,
         }}>

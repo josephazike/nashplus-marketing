@@ -86,13 +86,13 @@ export function ArticleCard({ post, index, sizes, priority = false }: ArticleCar
           top:            0.75rem;
           left:           0.75rem;
           font-family:    var(--font-mono);
-          font-size:      0.625rem;
-          letter-spacing: 0.22em;
+          font-size:      0.6875rem;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
           color:          #ffffff;
-          background:     rgba(28, 28, 25, 0.58);
+          background:     rgba(28, 28, 25, 0.62);
           backdrop-filter: blur(6px);
-          padding:        0.3rem 0.65rem;
+          padding:        0.35rem 0.7rem;
           border-radius:  3px;
           white-space:    nowrap;
         }
@@ -130,9 +130,9 @@ export function ArticleCard({ post, index, sizes, priority = false }: ArticleCar
         }
         .article-card-meta {
           font-family:    var(--font-mono);
-          font-size:      0.625rem;
-          letter-spacing: 0.16em;
-          color:          var(--ink-faint);
+          font-size:      0.75rem;
+          letter-spacing: 0.1em;
+          color:          var(--ink-secondary);
           margin-top:     0.25rem;
         }
 
